@@ -235,6 +235,7 @@ export default () => {
             <img src="./img/svg/btn-right.svg" alt="next button" /> -->
           </div>
         </div>
+
       </div>
 
       <div class="footer d-flex">
