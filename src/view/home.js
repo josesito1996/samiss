@@ -38,7 +38,7 @@ export default () => {
         </div>
         <div class="title-btnActions d-flex">
           <h5>Caso estibadores</h5>
-          <div class="btn-actions d-flex">
+          <div class="btn-actions d-flex" id="actuacion">
             <p class="moreIcon">+</p>
             <p>Actuación</p>
           </div>
@@ -46,7 +46,7 @@ export default () => {
         <div class="tags-case d-flex">
           <ul class="">
             <li><a href="#">Datos</a></li>
-            <li><a href="#">Actuaciones</a></li>
+            <li><a href="#" >Actuaciones</a></li>
             <li><a href="#">Documentos</a></li>
             <li><a href="#">Tareas</a></li>
           </ul>
@@ -55,6 +55,7 @@ export default () => {
           <div class="detail-description">
             <div class="title-description d-flex">
               <h6 class="text-blue-opacity">Descripción</h6>
+
               <img
                 id="btnEditComment"
                 src="./img/svg/edit.svg"
@@ -83,8 +84,10 @@ export default () => {
                 rows=""
                 autofocus
                 class="txt-comment hide"
+                disabled
               ></textarea>
               <p id="countComment" class="hide">(Máximo 200 caracteres)</p>
+
             </div>
             <h6 class="text-blue-opacity">Fecha de creación</h6>
             <p>${inspectionDate}</p>
@@ -104,7 +107,9 @@ export default () => {
                 <img src="./img/svg/headhunting.svg" class="cardIcon" />
                 <p class="text-blue">Empleo y colocación</p>
               </div>
+
               <div id="materia4" class="card_materia_cuatro">
+
                 <img src="./img/svg/apreton-manos.svg" class="cardIcon" />
                 <p class="text-blue">Intermediación laboral</p>
               </div>
@@ -122,9 +127,190 @@ export default () => {
               </div>
               <div id="materia8" class="card_materia_ocho">
                 <img src="./img/svg/inspeccion.svg" class="cardIcon" />
+
                 <p class="text-blue">Labor inspectiva</p>
+
               </div>
             </div>
+          </div>
+          <div class="detail-process-performance d-flex  justify-content-center align-items-center">
+            <div class="card-process bg-white ">
+                <div class="col-12 " id="inProcess">
+                    <div class="row" id="title_inProcess">
+                    <p >Actuación en proceso</p>
+                    </div>
+                    <div class="row">
+                        <div class="d-flex flex-row " style="margin-right:50px">
+                        <div>
+                            <p class="title_tipoResolution">Tipo:Resolución de <br> Sub intendencia</p>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-center  " style="border-left:none;" id="container_adicional_information">
+                            <img class="img_tipoResolution" src="./img/svg/file text.svg" alt="" />
+                            <div class="d-flex flex-column   ">
+                                <p class="text_Resolution">0</p>
+                                <p class="text_tipoResolution">Documentos</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-center   align-items-center " id="container_adicional_information">
+                            <img class="img_tipoResolution" src="./img/svg/user check.svg" alt="" />
+                            <div class="d-flex flex-column  align-items-center ">
+                                <p class="text_Resolution">Laura Perez</p>
+                                <p class="text_tipoResolution">Funcionario(a)</p>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-center    " id="container_adicional_information">
+                            <div class="d-flex flex-column  align-items-center">
+                                <p class="text_Resolution" style="color: #FF3355;">Tareas</p>
+                                <p class="text_Resolution" style="font-size: 10px;margin-left:28px;">0 pendientes</p>
+                            </div>
+                            <img src="./img/svg/Vector.svg"  class="style_icon_right" alt="" />
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                    <hr>
+                    <div class="col-12 d-flex ">
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <div>
+                                    <h6 class="title_card" style="margin-left:36px;">Multa Potencial</h6>
+                                    <div class="d-flex flex-row ">
+                                        <img src="./img/trending up.png" alt="" loading="lazy"
+                                            style=" width: 24px;height: 27px; margin-right:12.68px;margin-left:67px" />
+                                        <p id="multa" style="font-weight: 600;
+                                            font-size: 20px;
+                                            line-height: 20px;      
+                                            display: flex;
+                                            align-items: center;
+                                            color: #0E3141;"></p>
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom:44px;margin-top:25px;">
+                                    <h6 class="title_card" style="margin-left:36px;">Riesgo</h6>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <div id="label_risk" style="margin-left:65px; margin-right:26.7px;">
+                                            <li class="bullets1" style="
+                                            color: #FF3355;
+                                            list-style:initial;
+                                            opacity: 0.2;"><span id="label_level_risk" class="label_level_risk1">Nivel
+                                                    Alto</span>
+                                            </li>
+
+                                            <li class="bullets2" style="
+                                            color: #FFB000;
+                                            list-style:initial;;
+                                             opacity: 0.2;"><span id="label_level_risk" class="label_level_risk2">Nivel
+                                                    Moderado</span></li>
+
+                                            <li class="bullets3" style="
+                                            color:  #31CC53;
+                                            list-style:initial;
+                                            opacity: 0.2;"><span id="label_level_risk" class="label_level_risk3">Nivel
+                                                    Leve</span> </li>
+                                        </div>
+
+                                        <div id="bars" class="d-flex flex-row-reverse align-items-end">
+                                            <div id="bar1" style="width: 6.94px;
+                                            height: 46px;
+                                            left: 637.21px;
+                                            top: 559px;
+                                            background:#FF3355;
+                                            opacity: 0.2;
+                                            border-radius: 5px;"></div>
+
+                                            <div id="bar2" style="width: 6.94px;
+                                            height: 33.67px;
+                                            left: 619.18px;
+                                            top: 571.33px;  
+                                            background: #FFB000;
+                                            opacity: 0.2;
+                                            border-radius: 5px;
+                                            margin-right:11.11px;"></div>
+
+                                            <div id="bar3" style="width: 6.94px;
+                                            height: 22.76px;
+                                            left: 601.15px;
+                                            top: 582.24px;
+                                            background: #31CC53;
+                                            opacity: 0.2;
+                                            border-radius: 5px;
+                                            margin-right:11.11px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h6 class="title_card" style="margin-left:36px;font-family: Raleway;
+                                font-style: normal;
+                                font-weight: bold;
+                                font-size: 14px;
+                                line-height: 20px;
+                                align-items: center;
+                                color: #969CBA;
+                               ">Perfil de funcionarios</h6>
+
+                                    <div class="d-flex flex-row align-items-center justify-content-center" style="width:261px; height:68px; background: #F9FBFC;                
+                                        border: 1px solid #466EFE;
+                                        margin-top:14px;
+                                        box-sizing: border-box;
+                                        border-radius: 6px;
+                                        margin-bottom:73px;
+                                        margin-left:32px;">
+                                        <img src="./img/funcionario.png" alt="" loading="lazy"
+                                            style=" width: 38.3px;height: 38px;" />
+                                        <p style="margin-left:18.7px;margin-top:10px;font-family: Raleway;
+                                        font-style: normal;
+                                        font-weight: bold;
+                                        font-size: 14px;
+                                        line-height: 16px;
+                                        display: flex;
+                                        align-items: center;
+                                        color: #0F3041;">${localStorage.getItem('inspectorAuxiliar') }</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <div class="row d-flex  justify-content-center">
+                                    <div class="col-12 col-lg-3">
+                                        <div class="row d-flex justify-content-center mt-100">
+                                            <div class="col-md-6">
+                                                <div class="progressCircle blue"> <span class="progressCircle-left">
+                                                        <span class="progressCircle-bar"></span> </span> <span
+                                                        class="progressCircle-right"> <span
+                                                            class="progressCircle-bar"></span>
+                                                    </span>
+                                                    <div class="progressCircle-value">0</div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-lg-6" style="margin-left:20px;">
+                                        <p class="title_card" style="margin-bottom:0px;font-weight: 600;">Documentos</p>
+                                        <p style="font-family: Raleway;
+                                            font-style: normal;
+                                            // font-weight: 600;
+                                            font-size: 11px;
+                                            line-height: 20px;
+                                            color: #969CBA;">aun no tienes documentos <br> solicitados?</p>
+                                    </div>
+
+                                    <div class="col-12 col-lg-1">
+                                        <img src="./img/+.png" alt="" style=" width: 20px;height: 20px;" />
+                                    </div>
+                                </div>
+                                <div id="container_archivosSubidos">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>     
+
           </div>
         </div>
       </div>
@@ -248,8 +434,13 @@ export default () => {
     </div>
   `;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 37cd373a23c162a0e48cd6f92403efb271437f29
   // **********  Columna Izquierda (inicio)********** //
   // const materias = viewHome.querySelector("#materias");
+
   const nameMateria1 = localStorage.getItem("materia1");
   const nameMateria2 = localStorage.getItem("materia2");
   const nameMateria3 = localStorage.getItem("materia3");
@@ -315,60 +506,8 @@ export default () => {
     materia8.classList.remove("hide");
   }
 
-  //     //agregar archivos subidos al home
-  //     let getFile = localStorage.getItem('file')
 
-  //     //localStorage file date orden
-
-  //     const  container_archivosSubidos = viewHome.querySelector("#container_archivosSubidos");
-  //     container_archivosSubidos.innerHTML = `
-  //     <div><button>${getFile}</button>
-  //     </div>
-  //         `
-  //   //calcular el nivel de riesgo
-  //   //Cuantos values me traigo
-
-  //   // **********  Columna Izquierda (termino)  ********** //
-
-  //   //evento list para utenticar
-  //   const autenticar = firebase.auth();
-  //   autenticar.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       console.log("signin");
-  //     } else {
-  //       console.log("signup");
-  //     }
-  //   });
-
-  // // //leer documentos
-  // // firebase.firestore()
-  // // .collection("users").onSnapshot((querySnapshot) => {
-  // //   fecha_orden.innerHTML='';
-  // //   querySnapshot.forEach((doc) => {
-  // //     //   console.log(`${doc.id} => ${doc.data().check1}`);
-  // //       fecha_orden.innerHTML += `
-  // //         <h6 class="title_card">Fecha de creación</h6>
-  // //         <p style="font-size: 14px;">${doc.data().fecha}</p>
-  // //         <h6 class="title_card">Orden de inspección</h6>
-  // //         <p style="font-size: 14px;">${doc.data().orden}</p>
-  // //         <h6 class="title_card">Materias</h6>
-  // //       `
-  // //         });
-  // //       });
-
-  //       //habilitar input
-  //       const editar = viewHome.querySelector("#edit");
-  //       editar.addEventListener("click", ()=>{
-  //         const description = viewHome.querySelector("#description");
-  //         if(description .disabled == true)	{
-  // 		      description.disabled=false;
-  // 	         }
-  //               else
-  //         {
-  //           description.disabled=true;
-  //         }
-  //             });
-
+ 
         //Ingresar comentarios al textarea
         const edit = viewHome.querySelector("#btnEditComment");
         const save = viewHome.querySelector("#btnSaveComment");
@@ -381,6 +520,7 @@ export default () => {
           pComment.classList.add("hide");
           divComment.classList.remove("hide");
           txtComment.classList.remove("hide");
+          txtComment.disabled = false;
           countComment.classList.remove("hide");
           save.classList.remove("hide");
           edit.classList.add("hide");
@@ -390,24 +530,37 @@ export default () => {
           pComment.classList.add("hide");
           divComment.classList.remove("hide");
           txtComment.classList.remove("hide");
+          txtComment.disabled= false ;
           countComment.classList.remove("hide");
           save.classList.remove("hide");
           edit.classList.add("hide");
         });
 
         save.addEventListener("click", ()=> {
-          txtComment.value="";
-          divComment.classList.add("hide");
-          txtComment.classList.add("hide");
-          countComment.classList.add("hide");
-          pComment.classList.remove("hide");
+          txtComment.disabled= true ;
           edit.classList.remove("hide");
           save.classList.add("hide");
         })
 
 
 
+//  agregar archivos subidos al home
+    let getFile = localStorage.getItem('file')  
 
+     
+    // localStorage file date orden
+     
+
+
+    const  container_archivosSubidos = viewHome.querySelector("#container_archivosSubidos");
+    container_archivosSubidos.innerHTML = `
+    <div><button>${getFile}</button>
+    </div>
+    `
+//  calcular el nivel de riesgo
+//   Cuantos values me traigo
+
+<<<<<<< HEAD
   //         //número aleatorio
   //         function aleatorio(inferior, superior) {
   //             var numPosibilidades = superior - inferior;
@@ -460,4 +613,107 @@ export default () => {
 
   return viewHome;
 };
+=======
+//   // **********  Columna Izquierda (termino)  ********** //
+
+//   //evento list para utenticar
+//   const autenticar = firebase.auth();
+//   autenticar.onAuthStateChanged((user) => {
+//     if (user) {
+//       console.log("signin");
+//     } else {
+//       console.log("signup");
+//     }
+//   });
+
+
+// // //leer documentos
+// // firebase.firestore()
+// // .collection("users").onSnapshot((querySnapshot) => {
+// //   fecha_orden.innerHTML='';
+// //   querySnapshot.forEach((doc) => {
+// //     //   console.log(`${doc.id} => ${doc.data().check1}`);
+// //       fecha_orden.innerHTML += `
+// //         <h6 class="title_card">Fecha de creación</h6>
+// //         <p style="font-size: 14px;">${doc.data().fecha}</p>
+// //         <h6 class="title_card">Orden de inspección</h6>
+// //         <p style="font-size: 14px;">${doc.data().orden}</p>
+// //         <h6 class="title_card">Materias</h6>
+// //       `
+// //         });
+// //       });
+   
+    //   //habilitar input
+    //   const editar = viewHome.querySelector("#edit");
+    //   editar.addEventListener("click", ()=>{
+    //     const description = viewHome.querySelector("#description");
+    //     if(description .disabled == true)	{
+	// 	      description.disabled=false;
+	//          }
+    //           else
+    //     {
+    //       description.disabled=true;
+    //     }
+    //         });
+
+        //número aleatorio
+        function aleatorio(inferior, superior) {
+            var numPosibilidades = superior - inferior;
+            var aleatorio = Math.random() * (numPosibilidades + 1);
+            aleatorio = Math.floor(aleatorio);
+            return inferior + aleatorio;
+        }
+
+        const multa_aleatoria = (x) =>  {
+            return x.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+          }
+          console.log(multa_aleatoria(aleatorio(5000, 250000))); 
+
+          //Registar multa alearotia en input
+          const multa = viewHome.querySelector("#multa");
+          multa.innerHTML='S/' + multa_aleatoria((aleatorio(5000, 250000)))
+
+          //nivel de riego
+          const sizeCheck = localStorage.getItem("checked");
+          if(sizeCheck>=4){
+            //Si el usuario marca 4 o más materias debe aparecer riesgo alto
+            const  label_level_risk = viewHome.querySelector(".label_level_risk1");
+            label_level_risk.style.fontSize = '14px';
+            const  bullets = viewHome.querySelector(".bullets1");
+            bullets.style.opacity = 1;
+            const  bar1 = viewHome.querySelector("#bar1");
+            bar1.style.opacity = 1;
+            console.log("riesgo alto")
+
+        }else if (sizeCheck>=2){
+             //Si marca 2 o 3 riesgo medio 
+             const  label_level_risk = viewHome.querySelector(".label_level_risk2");
+             label_level_risk.style.fontSize = '14px';
+             const  bullets = viewHome.querySelector(".bullets2");
+             bullets.style.opacity = 1;
+             const  bar2 = viewHome.querySelector("#bar2");
+             bar2.style.opacity = 1;
+            console.log("riesgo medio")
+
+        }else{
+            // solo 1 materia debe aparecer como riesgo bajo
+            const  label_level_risk = viewHome.querySelector(".label_level_risk3");
+            label_level_risk.style.fontSize = '14px';
+            const  bullets = viewHome.querySelector(".bullets3");
+            bullets.style.opacity = 1;
+            const  bar3 = viewHome.querySelector("#bar3");
+            bar3.style.opacity = 1;
+            console.log("riesgo bajo")
+        }
+
+        //ir actuacion
+
+        const actuacion =viewHome.querySelector("#actuacion");
+        actuacion.addEventListener("click", ()=> {
+            window.location.hash = "#/actuacion";
+        })
+    
+    return viewHome;
+  };
+>>>>>>> 37cd373a23c162a0e48cd6f92403efb271437f29
 

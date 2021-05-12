@@ -97,8 +97,7 @@ export default () => {
     
     </div>
     <!---FILA 2-->
-    <div class="row" style="height:815px;">
-    
+    <div class="row" >
         <div class="col-12" style="margin-left:152px;margin-top:20px;">
             <ul class="navbar-nav flex-row">
                 <li class="nav-item me-3 me-lg-1">
@@ -407,7 +406,7 @@ export default () => {
 
   //******* Form Caso *******//
   const inspectionDate = viewInspection.querySelector("#fecha_inspection");
-  // const inspectionOrder = viewInspection.querySelector("#orden_inspection");
+   const inspectionOrder = viewInspection.querySelector("#orden_inspection");
 //   const checkboxes = viewInspection.querySelector(
 //     'input[type="checkbox"]:checked'
 //   );
@@ -416,8 +415,12 @@ export default () => {
     localStorage.setItem("date", inspectionDate.value);
   }
 
+  function handlerOrder() {
+    localStorage.setItem("order", inspectionOrder.value);
+  }
+
   inspectionDate.addEventListener("change", handlerDate);
-  // inspectionOrder.addEventListener("change", handlerOrder);
+   inspectionOrder.addEventListener("change", handlerOrder);
 
   //******* Form Caso - Materias *******//
   const checkUno = viewInspection.querySelector("#check1");

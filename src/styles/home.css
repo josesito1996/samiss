@@ -11,20 +11,11 @@
 /*estilos titulos card*/
 ´.title_card{
     font-family: Raleway;
-font-style: normal;
-font-weight: bold;
-font-size: 16px;
-line-height: 15px;
-/* identical to box height, or 94% */
-
-display: flex;
-align-items: center;
-
-/* Primary Blue */
-
-color: #0F3041;
-opacity: 0.42;
-margin-left: 20px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    color: #0E3141;
 }
 
 /*estilos aside*/

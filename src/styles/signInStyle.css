@@ -1,0 +1,41 @@
+.container-login {
+  height: 100vh;
+  background: linear-gradient(225deg, #FF3355 18.23%, #C50121 67.19%, #960019 92.19%);
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  padding: 226px 202px 232px 290px;
+  justify-content: center;
+  
+}
+
+.container-login .div-logo-form {
+  transform: matrix(-1, 0, 0, 1, 0, 0);
+  align-items: center;
+  justify-content: center;
+}
+
+.div-logo-form .logoLogin {
+  height: 67.51px;
+  width: 200px;
+}
+
+.div-logo-form .form {
+  margin-left: 120px;
+}
+
+.form .txtgray {
+  color: var(--txtGray);
+  font-size: 14px;
+  
+}
+
+.form .txtPlaceholderGray {
+  font-size: 14px;
+}
+
+.form .ptxtRed {
+  color: var(--txtRed);
+}
+
+.form .subtxt {
+  font-size: 12px;
+}

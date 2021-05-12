@@ -7,6 +7,7 @@
 
 .disabled {
   display: none;
+ 
 }
 
 /******** HEADER (inicio) ********/
@@ -203,6 +204,7 @@
   display: none;
 }
 
+
 .detail-description .textarea-container {
   flex-direction: column;
   height: 78px;
@@ -263,6 +265,88 @@
 
 .cardsMaterias .hide {
   display: none;
+}
+
+.detailMain .detail-process-performance{
+  /* border: 1px solid red; */
+
+  margin-left: 18px;
+  width:120%;
+  height:594px;
+  background: white;
+}
+
+.card-process{
+  /* border: 1px solid red; */
+  width: 686px;
+ 
+}
+
+/* #inProcess{
+  height: 143px;
+} */
+#title_inProcess{
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  align-items: center;
+  color: #969CBA;
+  margin: 22px 45px 20px 22px;
+}
+
+.title_tipoResolution{
+  font-family: Raleway;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  color: #0F3041;
+  width: 149px;
+  margin-left: 52.5px;
+}
+
+#container_adicional_information{
+  width: 120;
+  border-left:1px solid #E1E6F0;
+  padding:  5px;
+  height: auto;
+}
+
+.text_tipoResolution{
+  font-family: Raleway;
+font-style: normal;
+font-weight: 600;
+font-size: 10px;
+line-height: 12px;
+display: flex;
+align-items: center;
+color: #969CBA;
+}
+.text_Resolution{
+  font-family: Raleway;
+font-style: normal;
+font-weight: 600;
+font-size: 12px;
+line-height: 14px;
+display: flex;
+align-items: center;
+color: #0F3041;
+height: auto;
+margin-bottom: 0px;
+}
+.img_tipoResolution{
+  margin-right: 8px;
+  margin-bottom: 15px;
+}
+.style_icon_right{
+  margin-left:20px;
+  width: auto;
+  height: 12px;
+  margin-top: 8px;
 }
 /******** MAIN (termino) ********/
 

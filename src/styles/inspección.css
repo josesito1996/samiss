@@ -116,16 +116,10 @@ align-items: center;
 
 /*link drop y subir de fomra manual*/
 #sube_archivo{
-  border-bottom: 2px solid #c8dadf;
+ }
+#line_manual{
   
-  padding: 4px 8px;
-  margin: 0 5px;
-}
-#sube_manual{
-  border-bottom: 2px solid #c8dadf;
-  
-  padding: 4px 8px;
-  margin: 0 5px;
+ 
 }
 
 #home_inspection{
@@ -196,7 +190,8 @@ align-items: center;
   border: 1px solid #D2D6E1;
   box-sizing: border-box;
   border-radius: 10px;
-  margin: 30px 350px 60px 350px;
+  margin-top: 30px;
+  /* margin: 30px 350px 60px 350px; */
 
 }
 
@@ -207,10 +202,9 @@ align-items: center;
   font-size: 12px;
   line-height: 14px;
   /* identical to box height */
-  display: flex;
   align-items: center;
   /* validación */
-  color: #48AE4C;
+  color: #FF3355;
   text-decoration: none;
   margin-left:5px;
 }

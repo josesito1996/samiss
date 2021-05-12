@@ -2,56 +2,91 @@ import { signIn } from '../firebase/firebase-Auth.js';
 
 export default () => {
     const viewSignIn = document.createElement('div');
-    viewSignIn.innerHTML = `
-    <!---Primera fila-->
-    <div class="row " style="background: #FF3355;padding: 0px 200px 200px 200px;">
-        <!---Columna izquierda-->
-        <div class="col-12 col-lg-6">
-    
-            <img src="./img/Logo Sami.png" style="width:200px; height:67.51px; margin-left:290px" class="img_logoLogin"
-                alt="logo">
-    
-        </div>
-        <div class="col-12 col-lg-6">
+    viewSignIn.innerHTML =`
+      <div class="container-login d-flex">
+        <div class="div-logo-form d-flex">
+          <div>
+            <img src="./img/svg/logo-blanco.svg" class="logoLogin" alt="logo" />
+          </div>
+          <div class="form">
             <form class="form1">
-                <div clas="row">
-                    <img src="./img/Group.png" class="img_group" alt="logo">
+              <div clas="row">
+                <img src="./img/svg/group.svg" class="img_group" alt="logo" />
+              </div>
+
+              <div clas="row">
+                <div class="flex_newAccount">
+                  <p class="txtgray ">
+                    Completa tus credenciales. ¿Aún no tienes una cuenta?&nbsp
+                  </p>
+                  <a
+                    href="#/signUp"
+                    class="ptxtRed"
+                    id="newAccount"
+                    style="text-decoration:none"
+                    >Crea tu cuenta</a
+                  >
                 </div>
-    
-                <div clas="row">
-                    <div class="flex_newAccount">
-                        <p>Completa tus credenciales.¿Aún no tienes una cuenta? &nbsp</p>
-                        <a href="#/signUp" class="text-danger" id="newAccount" style="text-decoration:none">Crea tu
-                            cuenta</a>
-                    </div>
+              </div>
+
+              <div clas="row">
+                <div
+                  class="input-group"
+                  id="container_email"
+                  style="height:auto;"
+                >
+                  <label
+                    for="exampleInputEmail1"
+                    class="form-label txtgray subtxt"
+                    style="position: absolute;"
+                    >Usuario</label
+                  >
+                  <input
+                    type="email"
+                    name="email"
+                    id="fname"
+                    class="form-control txtPlaceholderGray"
+                    placeholder="nombre@petroperu.com"
+                    aria-required="true"
+                    aria-invalid="false"
+                    style="border-radius:10px; background:none; position: relative; :focus:outline: 0;"
+                    required
+                  /><br />
+                  <p id="messageEmail"></p>
                 </div>
-    
-                <div clas="row">
-                    <div class="input-group" id="container_email" style="height:auto;">
-                        <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                        <input type="email" name="email" id="fname" class="form-control" placeholder="nombre@petroperu.com"
-                            aria-required="true" aria-invalid="false" required><br>
-                        <p id="messageEmail"></p>
-                    </div>
-                    <p id="mensajeEmail" class='aviso'></p>
-                    <div class="input-group">
-                        <input type="password" id="password" class="form-control" name="txtPassword"
-                            placeholder="Contraseña" />
-                        <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" class="bi bi-eye"></i></button>
-                    </div>
+                <p id="mensajeEmail" class="aviso"></p>
+                <div class="input-group">
+                  <input
+                    type="password"
+                    id="password"
+                    class="form-control txtPlaceholderGray"
+                    name="txtPassword"
+                    placeholder="Contraseña"
+                    style="border-radius:10px; outline: 0;"
+                  />
+                  <!-- <button type="button" id="btnToggle" class="toggle"><i id="eyeIcon" class="bi bi-eye"></i></button> -->
+                  <button type="button" id="btnToggle" class="toggle">
+                    <img src="./img/svg/eye.svg" alt="eye" />
+                  </button>
                 </div>
-    
-                <div clas="row" style="margin-top:22px;margin-left:230px;">
-                    <a href="#/signUp"  style="color:#1890FF;">Olvidé mi
-                        contraseña</a>
-                </div>
-    
-                <div clas="row"></div>
-                <button type="button" id="getIn" class="ingresar">Ingresar</button>
+              </div>
+
+              <div clas="row" style="margin-top:15px;margin-left:252px;">
+                <a href="#/signUp" class="" style="font-size:12px" color:#1890FF;"
+                  >Olvidé mi contraseña</a
+                >
+              </div>
+
+              <!-- <div clas="row"></div> -->
+              <div clas="row ">
+                <button type="button" id="getIn" style="margin-top:15px" class="ingresar ">
+                  <span class="">Ingresar</span>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        </form>
-    </div>
-    </div>
+      </div>
     `;
 
 //email con la nomenclatura correcta
