@@ -159,7 +159,7 @@ export default () => {
     <div class=" d-flex  flex-row float-start align-items-center justify-content-center">
         <li class=" " style="list-style: none; width:400px;text-align: center;">
             <a class="nav-link active link-active" id="sube_archivo" aria-current="page"
-                style="color: #0F3041; font-size: 16px;" href="#/home">Sube
+                style="color: #0F3041; font-size: 16px;" href="">Sube
                 tus archivos</a>
  
                 

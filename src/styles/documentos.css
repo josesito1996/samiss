@@ -30,8 +30,20 @@
     text-decoration-line: underline;
     color: #0F3041;
     width: 219px;
+    
 }
 
+#container_tar_princial:hover{
+
+    background : rgba(150, 156, 186, 0.2);
+    background-image: url('../img/svg/up_mostrar_doc_tareas.svg');
+    background-repeat: no-repeat;
+    background-position:center right;
+
+    
+    
+    
+}
 .name_info_down1{
     cursor: pointer;
     font-family: Raleway;
@@ -408,4 +420,8 @@ border-radius: 6px 0px 0px 13px;
 #arrows_doc{
     margin-left: 90px;
   
+}
+
+.cambioFond{
+    background : "rgba(150, 156, 186, 0.2)"
 }

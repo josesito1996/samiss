@@ -417,13 +417,13 @@
   text-decoration: line-through;
 }
 
-.createTask .tdTable-createTask .tStatusPendiente::before {
+/* .createTask .tdTable-createTask .tStatusPendiente::before {
   content: "Pendiente";
 }
 
 .createTask .tdTable-createTask .tStatusFinalizado::after {
   content: "Finalizado";
-}
+} */
 
 .txt-green {
   color: var(--txtgreen);

@@ -95,16 +95,13 @@ export default () => {
 
 <div class="col-12 d-flex align-items-center justify-content-center">
 
-    <div class=" d-flex  flex-row float-start align-items-center justify-content-center" style="border-bottom:1px solid #7D7D7D; ;width:800px;">
-        <li  style="list-style: none; width:400px;text-align: center;">
-            <a class="nav-link active"  id="sube_archivo" aria-current="page"
-                style="color: #0F3041;font-weight: 600;
-                font-size: 16px;border-bottom:  1px solid #7D7D7D;" href="#/home">Sube
-                tus archivos</a>
-        </li>
-        <li  id="sube_manual" style=" width:400px;text-align: center;">
-            <a class="nav-link active" href="#/home" id="line_manual"  style="color:#0E3141;font-size: 16px; ">Crear de forma manual</a>
-        </li>
+    <div class=" d-flex  flex-row float-start align-items-center justify-content-center" style="border-bottom:1px solid #7D7D7D; ;width:800px;margin-top:34px;">
+     
+            <div class="subir"  id="add_archivo" href="#/home">Sube tus archivos</div>
+       
+     
+            <div class="subir"  id="add_manual"  style="color:#0E3141;font-size: 16px; ">Crear de forma manual</div>
+     
     </div>
 
 </div>
@@ -336,26 +333,65 @@ function subirDocAFirebase(){
 });
    
 }
-//Evento click Crear de formulario manual
-const form1 =  viewActuacion.querySelector("#drop");  
-const form2 =  viewActuacion.querySelector("#handbook");   
-const line_manual= viewActuacion.querySelector("#line_manual");    
-const line_drop= viewActuacion.querySelector("#sube_archivo");    
-const sube_manual =  viewActuacion.querySelector("#sube_manual");   
+// //Evento click Crear de formulario manual
+// const form1 =  viewActuacion.querySelector("#drop");  
+// const form2 =  viewActuacion.querySelector("#handbook");   
+// const line_manual= viewActuacion.querySelector("#line_manual");    
+// const line_drop= viewActuacion.querySelector("#sube_archivo");    
+// const sube_manual =  viewActuacion.querySelector("#sube_manual");   
 
-const descripcion_actuacion = viewActuacion.querySelector("#descripcion_actuacion").value;
-localStorage.removeItem("descripcion_actuacion", descripcion_actuacion )
+// const descripcion_actuacion = viewActuacion.querySelector("#descripcion_actuacion").value;
+// localStorage.removeItem("descripcion_actuacion", descripcion_actuacion )
 
-sube_manual.addEventListener('click', (e) => {
-  e.preventDefault();
+// sube_manual.addEventListener('click', (e) => {
+//   e.preventDefault();
  
-  line_manual.style.borderBottomColor = "black";
-  line_drop.style.borderBottomColor = "white";
-  form2.classList.remove("ocultar")
-  form1.classList.add("ocultar")
+//   line_manual.style.borderBottomColor = "black";
+//   line_drop.style.borderBottomColor = "white";
+//   form2.classList.remove("ocultar")
+//   form1.classList.add("ocultar")
 
 
-});
+// });
+
+ //Evento click link Sube tus archivos
+        
+ const form1 =  viewActuacion.querySelector("#drop"); 
+ const form2 =  viewActuacion.querySelector("#handbook");       
+ const sube_archivo = viewActuacion.querySelector("#add_archivo");    
+ const sube_manual = viewActuacion.querySelector("#add_manual"); 
+ 
+
+sube_archivo.addEventListener("click", ()=> {
+form1.classList.remove("ocultar");
+form2.classList.add("ocultar");
+})
+
+sube_manual.addEventListener("click", ()=> {
+form1.classList.add("ocultar");
+form2.classList.remove("ocultar");
+})
+
+sube_archivo.classList.add("subir_change");
+const links = viewActuacion.getElementsByClassName("subir");
+for(let i=0; i < links.length; i ++)
+       {
+        links[i].onclick = function (){
+
+          let el = links[0];
+          while(el)
+          {
+            if(el.tagName === "DIV"){
+            // remueve class
+            el.classList.remove("subir_change");
+          }
+
+          //pasa al hermano
+          el = el.nextSibling;
+        }
+           this.classList.add("subir_change");
+         };
+       }    
 
 
 //localstorage Etapas

@@ -559,13 +559,15 @@ export default () => {
     // ************ //
   
   
-  
+    const btn_nextWelcome = viewSignUp.querySelector("#btn_nextWelcome");
   
     btn_ingresar.addEventListener("click", (e) => {
       e.preventDefault();
    
       first_initials();
 
+      btn_nextWelcome.classList.remove('ocultar'); 
+      btn_ingresar.classList.add('ocultar'); 
       const fname1 = viewSignUp.querySelector("#fname1");
       localStorage.setItem("name", fname1.value)
    
@@ -607,13 +609,20 @@ export default () => {
       // Evento click agregar
  
       const show_icon = viewSignUp.querySelector("#show_icon");
-      const btn_nextWelcome = viewSignUp.querySelector("#btn_nextWelcome");
+      // const btn_nextWelcome = viewSignUp.querySelector("#btn_nextWelcome");
       const btn_add = viewSignUp.querySelector("#add");
       btn_add.addEventListener("click", (e) => {
         e.preventDefault;
  
-        btn_ingresar.classList.add("ocultar");
-        btn_nextWelcome.classList.remove("ocultar");
+             //modal
+      const myModal = viewSignUp.querySelector(".modal");
+      const myInput = viewSignUp.querySelector(".myInput");
+ 
+      myModal.addEventListener("shown.bs.modal", function () {
+        myInput.focus();
+      });
+    //    btn_ingresar.classList.add("ocultar");
+    // btn_nextWelcome.classList.remove("ocultar");
         //jalar los nombres ingresados
         div_Show_Data.classList.remove("hide");
  
@@ -666,12 +675,12 @@ export default () => {
   });
  
   //FORMULARIO BIENVENIDA
-  const btn_nextWelcome = viewSignUp.querySelector("#btn_nextWelcome");
+  const btn_nextWelcomes = viewSignUp.querySelector("#btn_nextWelcome");
   const form2 = viewSignUp.querySelector("#form2");
   const formRegister = viewSignUp.querySelector("#formRegister");
   const registro = viewSignUp.querySelector("#form2");
   const welcome = viewSignUp.querySelector("#form3");
-  btn_nextWelcome.addEventListener("click", (e) => {
+  btn_nextWelcomes.addEventListener("click", (e) => {
     e.preventDefault();
     //formulario BIENVENIDA
     welcome.classList.remove("ocultar");
@@ -679,11 +688,11 @@ export default () => {
     form2.classList.add("ocultar");
  
     //Seleccionar el nombre del usuario por medio del valor del atributo id
-    const nombresincortar = document.getElementById("name").value;
-    const nombrecortado = nombresincortar.split(" ");
-    const primernombre = nombrecortado[0];
+    // const nombresincortar = document.getElementById("name").value;
+    // const nombrecortado = nombresincortar.split(" ");
+    // const primernombre = nombrecortado[0];
  
-    console.log(primernombre);
+    // console.log(primernombre);
  
     let email = document.getElementById("email").value;
  
@@ -698,7 +707,7 @@ export default () => {
     const showMessage = document.getElementById("show_message");
  
     show_message.innerHTML = `
-        <p>Gracias <strong>${primernombre}</strong> por registrarte </p>
+        <p>Gracias <strong>${localStorage.getItem('name')}</strong> por registrarte </p>
         <p>Te hemos enviado mensaje a <span style="color:#FF4766;">${email}</span> para verificar tu correo electrónico, así como las invitaciones a los colaboradores de tu empresa.</p>
      `;
  

@@ -40,7 +40,7 @@ export default () => {
 
   const descripcion_actuacion = localStorage.getItem("descripcion_actuacion");
 
-  viewHome.innerHTML = `
+  viewHome.innerHTML =  `
 
 
     <div class="wrapper">
@@ -84,11 +84,13 @@ export default () => {
         </div>
         <div class="title-btnActions d-flex">
           <h5>Caso estibadores</h5>
+
+          
           <div class="ocultar" id="container_actuacion">
-            <div class="btn-actions d-flex" id="actuacion">
-          </div>
-            <p class="moreIcon">+</p>
-            <p>Actuación</p>
+          <div class="btn-actions d-flex" id="actuacion">
+          <p class="moreIcon">+</p>
+          <p>Actuación</p>
+        </div>
           </div>
         </div>
         <div class="tags-case d-flex">
@@ -204,8 +206,14 @@ export default () => {
                         <div class="d-flex flex-row justify-content-center  " style="border-left:none;" id="container_adicional_information">
                             <img class="img_tipoResolution" src="./img/svg/file text.svg" alt="" />
                             <div class="d-flex flex-column   ">
+                            <div id="ceroDocumentos">
                                 <p class="text_Resolution">0</p>
                                 <p class="text_tipoResolution">Documentos</p>
+                            </div>
+
+                            <div id="sumaTotalDocumentos" class='ocultar'>
+                                
+                                </div>
                             </div>
                         </div>
 
@@ -220,7 +228,12 @@ export default () => {
                         <div class="d-flex flex-row justify-content-center    " id="container_adicional_information">
                             <div class="d-flex flex-column  align-items-center">
                                 <p class="text_Resolution" style="color: #FF3355;">Tareas</p>
-                                <p class="text_Resolution" style="font-size: 10px;margin-left:28px;">0 pendientes</p>
+                                <div id="ceroPendiente">
+                                <p class="text_Resolution"  style="font-size: 10px;margin-left:28px;"> 0 Pendientes</p>
+                                </div>
+                                <div id="sumaTotalPendiente" class='ocultar'>
+                                
+                                </div>
                             </div>
                             <img src="./img/svg/Vector.svg"  class="style_icon_right" alt="" />
                         </div>
@@ -336,7 +349,7 @@ export default () => {
                                               <div class="row">
                                                 <div class="d-flex flex-row">
                                                   <div class="padding_funcionario" style="width:150px;position: relative;"/>
-                                                  <img src="./img/svg/Rectangle 300.svg" class="funcionario" alt="" loading="lazy"/>
+                                                  <img src="./img/svg/hombre.svg" class="funcionario" alt="" loading="lazy"/>
                                                   <div class="fondo_camera">
                                                   </div>
                                                   <img src="./img/svg/camera on.svg" class="camera" alt="" loading="lazy"/>
@@ -407,11 +420,13 @@ export default () => {
                                                         <p class="modal_title_funcionario" style="margin-bottom:0px;">Califica a tu funcionario</p>
                                                         
                                                         <div class="star-container">
+                                                        <span style ="width:230px;"> </span>
                                                         <div class="star" data-val="5"></div>
                                                         <div class="star" data-val="4"></div>
                                                         <div class="star" data-val="3"></div>
                                                         <div class="star" data-val="2"></div>
                                                         <div class="star" data-val="1"></div>
+                                                       
                                                       </div>
                                                       
                                                        
@@ -429,7 +444,7 @@ export default () => {
                               
                                 <!-- div-sunafil -->
 
-                                <div class="div-cardSunafil d-flex"
+                                <div class="div-cardSunafil d-flex">
                                   <img src="./img/sunafil.jpg" style="height:16px; width:64px;"/>
                                   <div class="cardSunafil d-flex">
                                     <div class="cardSunafil-body d-flex">
@@ -752,10 +767,10 @@ export default () => {
 
         </div> 
 
-        <div class="ocultar" id ="main-documentos">
+        <div class="ocultar" id ="main-documentos" >
 
         <!---BOTONES CANTIDAD DE ACTUACION, DOCUMENTOS Y TAREAS--->
-        <div class="d-flex flex-row" id="container_total_mainGeneral" >
+        <div class="d-flex flex-row" id="container_total_mainGeneral"  >
 
         <div class="d-flex flex-row align-items-center justify-content-center" id="container_total_general">
         <p id="total_head_documentos">Total de Actuaciones</p>
@@ -809,9 +824,9 @@ export default () => {
           </div>
         </div>
              <!--DOCTUMENTOS--->
-        <div class="row" id="container_doc" style="background: #F9FBFC;   height: 59px;" >
+        <div class="row" id="" style="background: #F9FBFC;  " >
 
-          <div class="d-flex flex-row  align-items-center" style="height:84px;border-bottom: 2px solid #EFF2F9;">
+          <div class="d-flex flex-row  align-items-center" style="height:84px;">
 
             <div class="d-flex flex-row" style="margin-left:30px;">
               <div>
@@ -850,14 +865,15 @@ export default () => {
                       class="progressCircle1-bar"></span>
                     </span>
                   <div class="progressCircle1-value">1/3</div>
-                </div>
               </div>
+            </div>
+
               <div style="margin-left:12px;">
                 <p class="text_tipoResolution_fila1" style="margin-bottom:0px;font-size: 11px;width:123px;">DOCS PENDIENTES</p>
                 <p class="show_number_tarea" >01 tarea</p>
               </div>
 
-              </div>
+            </div>
 
               <div class="d-flex flex-row justify-content-center align-items-center">
 
@@ -883,59 +899,59 @@ export default () => {
 
         
             <div id="column_izquierda_documentos" >
-            <div>
-            <p id="title_principal">PRINCIPAL</p>
-            <div id="style_generalContainer_principal" >
-              <div class="d-flex flex-row justify-content-between" id="container_principal">
-              
-                <div style="width: 231px;height: 21px;">
-                <p class="styles_principal"><strong>Principal:</strong></p>
-                <p class="styles_principal">${localStorage.getItem("tipo")}</p>
-                </div>
-
-                <div style="width: 61px;height: 21px;">
-                <p class="styles_principal"><strong>Vence:</strong></p>
-                <p id="date_documentos">${localStorage.getItem(
-                  "fechaActual"
-                )}</p>
-                </div>
-
-              </div>
-              <div class='doc_select'>
-              <div class="d-flex flex-row align-items-center " id="container_doc_princial" style="height: 59px;">
-              <p style="margin-left:24px;
-                font-family: Raleway;
-                font-style: normal;
-                font-weight: 600;
-                font-size: 12px;
-                line-height: 14px;
-               margin-right:12px;
-
+              <div>
+                <p id="title_principal">PRINCIPAL</p>
+                <div id="style_generalContainer_principal" >
+                <div class="d-flex flex-row justify-content-between" id="container_principal">
                 
-                /* Primary Blue */
-                
-                color: #0F3041;" >01.</p>
-                <label for="file-upload" id="subir" style="margin-left:0px;">
-                <img  src="./img/svg/clicdoc.svg" alt="" />
-                  </label>
-                  <div class="d-flex flex-column ">
-                  <div id="name_info1" style="width: 183.58px;height: 15px;margin-top:15px;"></div>
-                  <p id="date_documentos" style="width: 73px;height: 21px;">30/04/21</p>
+                  <div style="width: 231px;height: 21px;">
+                  <p class="styles_principal"><strong>Principal:</strong></p>
+                  <p class="styles_principal">${localStorage.getItem("tipo")}</p>
                   </div>
-                  <img  src="./img/svg/up_mostrar_doc_tareas.svg" id="arrows_doc" class='ocultar' alt="" /> 
-              </div>
-              </div>
-              </div>
+
+                  <div style="width: 61px;height: 21px;">
+                  <p class="styles_principal"><strong>Vence:</strong></p>
+                  <p id="date_documentos">${localStorage.getItem(
+                    "fechaActual"
+                  )}</p>
+                  </div>
+
+                </div>
+                <div class='doc_select'>
+                <div class="d-flex flex-row align-items-center " id="container_doc_princial" style="height: 59px;">
+                <p style="margin-left:24px;
+                  font-family: Raleway;
+                  font-style: normal;
+                  font-weight: 600;
+                  font-size: 12px;
+                  line-height: 14px;
+                margin-right:12px;
+
+                  
+                  /* Primary Blue */
+                  
+                  color: #0F3041;" >01.</p>
+                  <label for="file-upload" id="subir" style="margin-left:0px;">
+                  <img  src="./img/svg/clicdoc.svg" alt="" />
+                    </label>
+                    <div class="d-flex flex-column ">
+                    <div id="name_info1" style="width: 183.58px;height: 15px;margin-top:15px;"></div>
+                    <p id="date_documentos" style="width: 73px;height: 21px;">30/04/21</p>
+                    </div>
+                    <img  src="./img/svg/up_mostrar_doc_tareas.svg" id="arrows_doc" class='ocultar' alt="" /> 
+                </div>
+                </div>
+                </div>
               </div>
             </div>
 
               <!--principal tareas-->
-              <div id="column_izquierda_documentos">
-            <div>
-            <p id="title_principal">TAREAS Y OTROS DOCS</p>
-            <div id="prueba_tareas">
-         
-              </div>
+            <div id="column_izquierda_documentos">
+              <div>
+              <p id="title_principal">TAREAS Y OTROS DOCS</p>
+                <div id="prueba_tareas">
+          
+                </div>
               </div>
             </div>
           </div>
@@ -1735,6 +1751,12 @@ export default () => {
     window.location.hash = "#/actuacion";
   });
 
+  const actuacions = viewHome.querySelector("#container_actuacion");
+  actuacions.addEventListener("click", () => {
+    window.location.hash = "#/actuacion";
+  });
+
+
   //mostar descripcion actuacion
 
   // const descripcion_actuacion = localStorage.getItem("#descripcion_actuacion");
@@ -1944,10 +1966,14 @@ export default () => {
      const container_tar_principal = viewHome.querySelector('#container_tar_princial');
      const arrows_tar = viewHome.querySelector("#arrows");
      click_show_doc.addEventListener("click", ()=> {
+
+
        container_doc_principal.style.background =  "rgba(150, 156, 186, 0.2)";
-       container_tar_principal.style.background =  "white";
+      //  container_tar_principal.style.background =  "white";
       arrows_doc.classList.remove('ocultar');
       arrows_tar.classList.add('ocultar');
+
+
        rootRef.on('value', function(snapshot){
          var datos = snapshot.val();
          var result = "" 
@@ -2246,7 +2272,7 @@ localStorage.setItem("dateVencimiento", inputDate2.value);
     }
   });
 
-
+ 
     // firebase
     //   .firestore()
     //   .collection("homeWorks")
@@ -2296,7 +2322,7 @@ localStorage.setItem("dateVencimiento", inputDate2.value);
               </td>
               <td id="fRegister">${doc.data().date}</td>
               <td id="fVenci"><strong>${doc.data().expiration}</strong></td>
-              <!--<td id="tStatus" data-id="${doc.id}">${doc.data().status}</td>-->
+              <td id="tStatus"  class="tStatus" data-id="${doc.id}">${doc.data().status}</td>
               <td id="tStatus" class="tStatusPendiente" data-id="${doc.id}"></td>
             </tr>
         `;
@@ -2316,14 +2342,14 @@ const mostrar_cards_tareas = () => {
       container_principal_tarea.innerHTML = "";
 
       querySnapshot.forEach((doc) => {
-        container_principal_tarea.innerHTML += `
+        container_principal_tarea.innerHTML +=  `
 
 
 <div id="style_generalContainer_principal" style="margin-bottom:8px;"class="style_generalContainer_principal">
 
 <div  id="container_principal_tarea">
 <div style="width: 231px;height: 21px;">
-<p class="styles_principal"><strong>Tarea 1 </strong></p>
+<p class="styles_principal"><strong>Tarea  </strong></p>
 <p class="styles_principal">${doc.data().taskName}</p>
 </div>
 
@@ -2368,7 +2394,16 @@ const mostrar_cards_tareas = () => {
     const arrows_doc = viewHome.querySelector("#arrows_doc");
       tarea.addEventListener("click", (e) => {
 
-     
+        
+             
+        // arrows.classList.remove('ocultar');
+        arrows_doc.classList.add('ocultar'); 
+      
+
+        // color_fondo_list_tarea.style.background = "rgba(150, 156, 186, 0.2)";
+           container_doc_principal.style.background = "white";
+         
+       
         console.log(e.target.dataset.id);
         const idDocTareas = e.target.dataset.id;
         e.preventDefault();
@@ -2382,10 +2417,7 @@ const mostrar_cards_tareas = () => {
             // console.log(datos[key].id);
            
             if ( idDocTareas ===  datos[key].id) {
-              arrows.classList.remove('ocultar');
-              arrows_doc.classList.add('ocultar');
-              color_fondo_list_tarea.style.background = "rgba(150, 156, 186, 0.2)";
-              container_doc_principal.style.background = "white";
+
               // console.log("si  es el ID");
 
               result +=
@@ -2412,6 +2444,15 @@ const mostrar_cards_tareas = () => {
 
 };
 
+// const tStatuss = tableTask.querySelectorAll(".tStatus");
+// tStatuss.forEach(() => {
+//       if(doc.data().status = "Pendiente"){ 
+//      console.log('pendiente');            
+//    } else if (doc.data().status = "Finalizado") {
+//      console.log("finalizado");
+//    }
+//  });
+
 
         const checkStatus = tableTask.querySelectorAll(".check-status");
         const fRegister = tableTask.querySelector("#fRegister");
@@ -2429,22 +2470,22 @@ const mostrar_cards_tareas = () => {
               console.log("CON check??");
               // console.log("ID del check???", check.id);
 
-              // completedTask(e.target.dataset.id);
-              fRegister.classList.add("txt-tach");
-              fVenci.classList.add("txt-tach");
-              tStatus.classList.add("txt-green");
-              // tStatus.classList.add("tStatus");
-              tStatus.classList.remove("tStatusPendiente");
-              tStatus.classList.add("tStatusFinalizado");
+              completedTask(e.target.dataset.id);
+              // fRegister.classList.add("txt-tach");
+              // fVenci.classList.add("txt-tach");
+              // tStatus.classList.add("txt-green");
+              // // tStatus.classList.add("tStatus");
+              // tStatus.classList.remove("tStatusPendiente");
+              // tStatus.classList.add("tStatusFinalizado");
             } else {
               console.log("SIN check??");
-              // pendingTask(e.target.dataset.id);
-              fRegister.classList.remove("txt-tach");
-              fVenci.classList.remove("txt-tach");
-              tStatus.classList.remove("txt-green");
-              // tStatus.classList.remove("tStatus");
-              tStatus.classList.add("tStatusPendiente");
-              tStatus.classList.remove("tStatusFinalizado");
+              pendingTask(e.target.dataset.id);
+              // fRegister.classList.remove("txt-tach");
+              // fVenci.classList.remove("txt-tach");
+              // tStatus.classList.remove("txt-green");
+              // // tStatus.classList.remove("tStatus");
+              // tStatus.classList.add("tStatusPendiente");
+              // tStatus.classList.remove("tStatusFinalizado");
             }
           });
         });
@@ -3182,21 +3223,83 @@ const mostrar_cards_tareas = () => {
 
     const flex_container_datos = viewHome.querySelector('#flex-container_datos');
     const container_actuacionenproceso = viewHome.querySelector('#container_actuacionenproceso');
+    const container_actuacion = viewHome.querySelector('#container_actuacion');
 
     if(tipo_actuacion != "")
    {
     casoSeleccionado.classList.remove('ocultar');
     casoNuevo.classList.add('ocultar');
+    casoNuevo.classList.add('ocultar');
     flex_container_datos.classList.remove('ocultar');
     flex_container_datos.style.display ="flex";
     container_actuacionenproceso.classList.add('ocultar');
+    container_actuacion.classList.remove('ocultar');
     console.log("holis")
    }else{
     casoSeleccionado.classList.add('ocultar');
     casoNuevo.classList.remove('ocultar');
     flex_container_datos.classList.add('ocultar');
     container_actuacionenproceso.classList.remove('ocultar');
+    container_actuacion.classList.add('ocultar');
    };
+
+// SUMAR DOCUMENTOS
+
+var sumaDocumentos = 0; 
+// Sum the count of each shard in the subcollection
+firebase.firestore().collection('tasks').where("files","!=",[]).get().then((snapshot) => {
+  let total_count = 1;
+  snapshot.forEach((doc) => {
+      total_count += doc.data().count;
+      console.log(total_count)
+      sumaDocumentos += total_count;
+      console.log(sumaDocumentos)
+      const sumaTotalDocumentos = sumaDocumentos + 1
+
+      console.log(sumaTotalDocumentos)
+
+      const sumaTotalDocumentosContainer = viewHome.querySelector('#sumaTotalDocumentos');
+      const ceroDocumentos = viewHome.querySelector('#ceroDocumentos');
+      sumaTotalDocumentosContainer.classList.remove('ocultar')
+      ceroDocumentos.classList.add('ocultar')
+      sumaTotalDocumentosContainer.innerHTML = `
+      <p class="text_Resolution"  style="font-size: 10px;">${sumaTotalDocumentos}</p>
+      <p class="text_tipoResolution">Documentos</p>`
+      console.log(sumaTotalDocumentos)
+
+  });
+
+});
+//SUMAR PENDIENTES
+
+  var sumaPendiente = 0; 
+      // Sum the count of each shard in the subcollection
+      firebase.firestore().collection('tasks').where("status", "==", "Pendiente").get().then((snapshot) => {
+        let total_count = 1;
+        snapshot.forEach((doc) => {
+            total_count += doc.data().count;
+            console.log(total_count)
+            sumaPendiente += total_count;
+            console.log(sumaPendiente)
+            const sumaTotalPendiente = sumaPendiente
+
+            console.log(sumaTotalPendiente)
+
+            const sumaTotalPendienteContainer = viewHome.querySelector('#sumaTotalPendiente');
+            const ceroPendiente = viewHome.querySelector('#ceroPendiente');
+            sumaTotalPendienteContainer.classList.remove('ocultar')
+            ceroPendiente.classList.add('ocultar')
+            sumaTotalPendienteContainer.innerHTML = `
+            <p class="text_Resolution"  style="font-size: 10px;margin-left:28px;">${sumaTotalPendiente} Pendientes</p>`
+
+            console.log(sumaTotalPendiente)
+ 
+        });
+
+      });
+  
+ 
+  
 
     return viewHome;
   };
