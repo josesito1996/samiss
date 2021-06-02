@@ -8,26 +8,29 @@ export const changeTmp = (hash) => {
   window.location.hash = hash;
   container.innerHTML = '';
   switch (hash) {
-    case '': // agregame al final de container components y su propiedad
+    case "": // agregame al final de container components y su propiedad
       container.appendChild(components.signIn());
       break;
-    case '#/signUp':
+    case "#/signUp":
       container.appendChild(components.signUp());
       break;
-    case '#/inspection':
+    case "#/inspection":
       container.appendChild(components.inspection());
       break;
-    case '#/home':
+    case "#/home":
       container.appendChild(components.home());
       break;
-    case '#/actuacion':
+    case "#/actuacion":
       container.appendChild(components.actuacion());
       break;
-    case '#/documentos':
-        container.appendChild(components.documentos());
-        break;
-    case '#/homework':
+    case "#/documentos":
+      container.appendChild(components.documentos());
+      break;
+    case "#/homework":
       container.appendChild(components.homework());
+      break;
+    case "#/viewReport":
+      container.appendChild(components.viewReport());
       break;
     default:
       return container.appendChild(components.Different());

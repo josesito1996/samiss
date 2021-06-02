@@ -5,6 +5,7 @@ import home from './home.js';
 import actuacion from './actuacion.js';
 import documentos from './documentos.js';
 import homework from './homework.js';
+import viewReport from "../reports/case-report/caseReport.js";
 import Different from './404.js';
 
 // ------------------------Objetos----------------------------------
@@ -16,5 +17,6 @@ export const components = {
   actuacion,
   documentos,
   homework,
+  viewReport,
   Different,
 };

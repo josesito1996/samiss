@@ -282,7 +282,8 @@ export default () => {
                 flex: none;
                 order: 4;
                 flex-grow: 0;
-                margin: 30px 630px;" class="pruebahome btnenviar_desacti">Continuar</button>
+                margin-left: 700px;
+                margin-top: 30px;" class="pruebahome btnenviar_desacti">Continuar</button>
             </form>
         </div>
     </div>

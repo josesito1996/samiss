@@ -255,6 +255,7 @@
 
 .detail-description .cardsMaterias {
   height: 135px;
+  width: 275px;
   overflow-y: auto;
 }
 
@@ -989,6 +990,10 @@ margin: 0px 10px;
 
   color: #000000;
  
+}
+
+.displayF {
+  display: block;
 }
 
 /******** SIDEBAR (termino) ********/

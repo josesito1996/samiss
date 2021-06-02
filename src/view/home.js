@@ -1,18 +1,23 @@
 // import { addTask } from "../view-controller/home-controller.js";
 // import { storage } from '../firebase/firebase.js';
 
+// import { containerReport } from "../reports/case-report/caseReport.js";
+
 export default () => {
   const viewHome = document.createElement("div");
   const inspectionDate = localStorage.getItem("date");
+  let inspecDate = inspectionDate.split("-");
+  let reversedDate = inspecDate.reverse();
+  let dateCreacion = reversedDate.join("-");
+
   const inspectionOrder = localStorage.getItem("order");
   const etapa_actuacion = localStorage.getItem("etapa");
   const tipo_actuacion = localStorage.getItem("tipo");
 
+
   // const date_actuacion = localStorage.getItem("date_actuacion");
 
-   //condicional si el value del local strogae esta vacio 
-
-  
+  //condicional si el value del local strogae esta vacio
 
   // fecha actual
   let date = new Date();
@@ -40,7 +45,7 @@ export default () => {
 
   const descripcion_actuacion = localStorage.getItem("descripcion_actuacion");
 
-  viewHome.innerHTML =  `
+  viewHome.innerHTML = `
 
 
     <div class="wrapper">
@@ -140,7 +145,7 @@ export default () => {
 
             </div>
             <h6 class="text-blue-opacity">Fecha de creación</h6>
-            <p>${inspectionDate}</p>
+            <p>${dateCreacion}</p>
             <h6 class="text-blue-opacity">Orden de inspección</h6>
             <p>${inspectionOrder}</p>
             <h6 class="text-blue-opacity">Materias</h6>
@@ -462,6 +467,18 @@ export default () => {
                                 <!-- -->
                                 </div>
 
+      <div style="margin-top:50px; text-align:center;">
+      <!--botón reporte -->
+      <button id="btnReport" 
+        style="font-size:11px; 
+        border-radius:5px;
+        padding:5px;
+        color: white;
+        margin-left:-350px;
+        background: #FF3355;">
+        Generar Reporte
+      </button>
+    </div>
 
 
 
@@ -906,7 +923,9 @@ export default () => {
                 
                   <div style="width: 231px;height: 21px;">
                   <p class="styles_principal"><strong>Principal:</strong></p>
-                  <p class="styles_principal">${localStorage.getItem("tipo")}</p>
+                  <p class="styles_principal">${localStorage.getItem(
+                    "tipo"
+                  )}</p>
                   </div>
 
                   <div style="width: 61px;height: 21px;">
@@ -1590,7 +1609,6 @@ export default () => {
 
   //   // ****  Columna Izquierda (termino)  **** //
 
-
   //habilitar input
   // const editar = viewHome.querySelector("#edit");
   // editar.addEventListener("click", ()=>{
@@ -1617,14 +1635,21 @@ export default () => {
   };
   console.log(multa_aleatoria(aleatorio(5000, 250000)));
   const multaAleatoria = multa_aleatoria(aleatorio(5000, 250000));
+  // console.log("multaAleatoria", multaAleatoria);
 
   //Registar multa alearotia en input
   const multa = viewHome.querySelector("#multa");
-  multa.innerHTML = "S/" + multa_aleatoria(aleatorio(5000, 250000));
+  let multaPontencial = multa_aleatoria(aleatorio(5000, 250000));
+  // multa.innerHTML = "S/" + multa_aleatoria(aleatorio(5000, 250000));
+  multa.innerHTML = "S/" + multaPontencial;
+  localStorage.setItem("multaPontencial", multaPontencial);
+  console.log("otraMulta", multaPontencial);
 
   //nivel de riego
   const sizeCheck = localStorage.getItem("checked");
   if (sizeCheck >= 4) {
+    console.log('tipo_riesgo', 'Nivel Alto');
+    localStorage.setItem("tipo_riesgo", "Nivel Alto");
     //Si el usuario marca 4 o más materias debe aparecer riesgo alto
     const label_level_risk = viewHome.querySelector(".label_level_risk1");
     label_level_risk.style.fontSize = "14px";
@@ -1634,6 +1659,8 @@ export default () => {
     bar1.style.opacity = 1;
     console.log("riesgo alto");
   } else if (sizeCheck >= 2) {
+    console.log("tipo_riesgo", "Nivel Moderado");
+    localStorage.setItem("tipo_riesgo", "Nivel Moderado");
     //Si marca 2 o 3 riesgo medio
     const label_level_risk = viewHome.querySelector(".label_level_risk2");
     label_level_risk.style.fontSize = "14px";
@@ -1643,6 +1670,8 @@ export default () => {
     bar2.style.opacity = 1;
     console.log("riesgo medio");
   } else {
+    console.log("tipo_riesgo", "Nivel Leve");
+    localStorage.setItem("tipo_riesgo", "Nivel Leve");
     // solo 1 materia debe aparecer como riesgo bajo
     const label_level_risk = viewHome.querySelector(".label_level_risk3");
     label_level_risk.style.fontSize = "14px";
@@ -1755,7 +1784,6 @@ export default () => {
   actuacions.addEventListener("click", () => {
     window.location.hash = "#/actuacion";
   });
-
 
   //mostar descripcion actuacion
 
@@ -1880,173 +1908,61 @@ export default () => {
   buttons_total.classList.add("button_change_etapas");
   const buttons_etapas = viewHome.getElementsByClassName("buttons_etapa");
 
-  for(let i=0; i < buttons_etapas.length; i ++)
-           {
-             buttons_etapas[i].onclick = function (){
+  for (let i = 0; i < buttons_etapas.length; i++) {
+    buttons_etapas[i].onclick = function () {
+      let el = buttons_etapas[0];
+      while (el) {
+        if (el.tagName === "DIV") {
+          // remueve class
+          el.classList.remove("button_change_etapas");
+        }
 
-              let el = buttons_etapas[0];
-              while(el)
-              {
-                if(el.tagName === "DIV"){
-                // remueve class
-                el.classList.remove("button_change_etapas");
-              }
+        //pasa al hermano
+        el = el.nextSibling;
+      }
+      this.classList.add("button_change_etapas");
+    };
+  }
 
-              //pasa al hermano
-              el = el.nextSibling;
-            }
-               this.classList.add("button_change_etapas");
-             };
-           }
+  //habilitar y deshabiliat boton entrar modal sunafil
 
-           //habilitar y deshabiliat boton entrar modal sunafil
+  const sunafil = viewHome.querySelector("#sunafil");
+  sunafil.addEventListener("click", () => {
+    const mensaje = viewHome.querySelector("#input_modalSunafil1");
+    mensaje.addEventListener("keyup", (e) => {
+      console.log("change");
+      const boton = viewHome.querySelector("#btn_entrar_modal_sunafil");
+      console.log(boton);
 
-           const sunafil = viewHome.querySelector('#sunafil');
-           sunafil.addEventListener("click" , () => {
+      if (mensaje.value.trim() !== "") {
+        console.log("Se muestra");
+        boton.removeAttribute("disabled");
+        const miniModal = viewHome.querySelector("#exampleModal1");
+      } else {
+        boton.setAttribute("disabled", "true");
+      }
+    });
+  });
 
-            const mensaje = viewHome.querySelector("#input_modalSunafil1");
-             mensaje.addEventListener("keyup", (e) => {
-             console.log("change");
-             const boton = viewHome.querySelector("#btn_entrar_modal_sunafil");
-              console.log(boton)
+  //LINKS
+  const link_datos = viewHome.querySelector("#link_datos");
+  const link_actuaciones = viewHome.querySelector("#link_actuaciones");
+  const link_documentos = viewHome.querySelector("#link_documentos");
+  const mainDatos = viewHome.querySelector("#main-datos");
+  const mainActuaciones = viewHome.querySelector("#main-actuaciones");
+  const mainDocumentos = viewHome.querySelector("#main-documentos");
 
-                       
-            if (mensaje.value.trim() !== "") {
-              console.log("Se muestra")
-              boton.removeAttribute('disabled')
-              const miniModal = viewHome.querySelector("#exampleModal1");
-           } else {
-              boton.setAttribute('disabled', "true");
-              
-            }
-          });
-              })
+  link_datos.addEventListener("click", () => {
+    mainDatos.classList.remove("ocultar");
+    mainActuaciones.classList.add("ocultar");
+    mainDocumentos.classList.add("ocultar");
+  });
 
- //LINKS
- const link_datos = viewHome.querySelector("#link_datos");
- const link_actuaciones = viewHome.querySelector("#link_actuaciones");
- const link_documentos = viewHome.querySelector("#link_documentos");
- const mainDatos = viewHome.querySelector("#main-datos");
- const mainActuaciones = viewHome.querySelector("#main-actuaciones");
- const mainDocumentos= viewHome.querySelector("#main-documentos");
-
- link_datos.addEventListener("click", ()=> {
-   mainDatos.classList.remove("ocultar");
-   mainActuaciones.classList.add("ocultar");
-   mainDocumentos.classList.add("ocultar");
- })
-
- link_actuaciones.addEventListener("click", ()=> {
-   mainDatos.classList.add("ocultar");
-   mainActuaciones.classList.remove("ocultar");
-   mainDocumentos.classList.add("ocultar");
-   
- })
-
- link_documentos.addEventListener("click", ()=> {
-   mainDatos.classList.add("ocultar");
-   mainActuaciones.classList.add("ocultar");
-   mainDocumentos.classList.remove("ocultar");
-
-   rootRef.on('value', function(snapshot){
-     var datos = snapshot.val();
-     var results = "" 
-     for(var key in datos){
-
-       console.log(datos[key].nombre)
-     
-       results +=  '<div  class="name_info_down">'+datos[key].nombre+'</div>';
-       
-     } 
-     document.getElementById("name_info").innerHTML= results;
-     document.getElementById("name_info1").innerHTML= results;
-     const click_show_doc = document.getElementById("name_info1");
-     const arrows_doc = viewHome.querySelector("#arrows_doc");
-     const container_doc_principal = viewHome.querySelector('#container_doc_princial');
-     const container_tar_principal = viewHome.querySelector('#container_tar_princial');
-     const arrows_tar = viewHome.querySelector("#arrows");
-     click_show_doc.addEventListener("click", ()=> {
-
-
-       container_doc_principal.style.background =  "rgba(150, 156, 186, 0.2)";
-      //  container_tar_principal.style.background =  "white";
-      arrows_doc.classList.remove('ocultar');
-      arrows_tar.classList.add('ocultar');
-
-
-       rootRef.on('value', function(snapshot){
-         var datos = snapshot.val();
-         var result = "" 
-         for(var key in datos){
-   
-           console.log(datos[key].url)
-         
-           result +=  '<iframe  class="styleIframe"  src="'+ datos[key].url +'"></iframe>';
-           
-         } 
-         document.getElementById("verFiles").innerHTML= result;
-       })
-
-     })
-   })
-
-   
- })
-
-
- link_datos.classList.add("links_change");
- const links = viewHome.getElementsByClassName("links");
- for(let i=0; i < links.length; i ++)
-          {
-           links[i].onclick = function (){
-
-             let el = links[0];
-             while(el)
-             {
-               if(el.tagName === "DIV"){
-               // remueve class
-               el.classList.remove("links_change");
-             }
-
-             //pasa al hermano
-             el = el.nextSibling;
-           }
-              this.classList.add("links_change");
-            };
-          }              
-
-      
-  
-//subir datoss al storage
-const txt_carga = viewHome.querySelector("#txt_carga");
-const conDocumentos = viewHome.querySelector("#conDocumentos");
-const conTareas = viewHome.querySelector("#conTareas");
-const usuario = viewHome.querySelector("#usuario");
-const Sintareas = viewHome.querySelector("#Sintareas");
-const Sindocumentos = viewHome.querySelector("#Sindocumentos");
-
-const cli = viewHome.querySelector("#mostrarCli");
-
-const subir = viewHome.querySelector("#subir");
-
-const file_upload = viewHome.querySelector("#file-upload");
-file_upload.addEventListener("change", ()=> {
-  subir.classList.add("ocultar");
-  txt_carga.classList.add("ocultar");
-  conDocumentos.classList.remove("ocultar");
-  conTareas.classList.remove("ocultar");
-  usuario.classList.remove("ocultar");
-  Sintareas.classList.add("ocultar");
-  Sindocumentos.classList.add("ocultar");
-  cli.classList.remove("ocultar");
-  var pdrs = document.getElementById('file-upload').files[0].name;
-  document.getElementById('info').innerHTML = pdrs;
-  const mostrarDoc = document.getElementById('info')
-  
-      
- 
-});
-
+  link_actuaciones.addEventListener("click", () => {
+    mainDatos.classList.add("ocultar");
+    mainActuaciones.classList.remove("ocultar");
+    mainDocumentos.classList.add("ocultar");
+  });
 
   link_documentos.addEventListener("click", () => {
     mainDatos.classList.add("ocultar");
@@ -2061,11 +1977,101 @@ file_upload.addEventListener("change", ()=> {
 
         results +=
           '<div  class="name_info_down">' + datos[key].nombre + "</div>";
-
       }
-     
+      document.getElementById("name_info").innerHTML = results;
+      document.getElementById("name_info1").innerHTML = results;
+      const click_show_doc = document.getElementById("name_info1");
+      const arrows_doc = viewHome.querySelector("#arrows_doc");
+      const container_doc_principal = viewHome.querySelector(
+        "#container_doc_princial"
+      );
+      const container_tar_principal = viewHome.querySelector(
+        "#container_tar_princial"
+      );
+      const arrows_tar = viewHome.querySelector("#arrows");
+      click_show_doc.addEventListener("click", () => {
+        container_doc_principal.style.background = "rgba(150, 156, 186, 0.2)";
+        //  container_tar_principal.style.background =  "white";
+        arrows_doc.classList.remove("ocultar");
+        arrows_tar.classList.add("ocultar");
 
-      
+        rootRef.on("value", function (snapshot) {
+          var datos = snapshot.val();
+          var result = "";
+          for (var key in datos) {
+            console.log(datos[key].url);
+
+            result +=
+              '<iframe  class="styleIframe"  src="' +
+              datos[key].url +
+              '"></iframe>';
+          }
+          document.getElementById("verFiles").innerHTML = result;
+        });
+      });
+    });
+  });
+
+  link_datos.classList.add("links_change");
+  const links = viewHome.getElementsByClassName("links");
+  for (let i = 0; i < links.length; i++) {
+    links[i].onclick = function () {
+      let el = links[0];
+      while (el) {
+        if (el.tagName === "DIV") {
+          // remueve class
+          el.classList.remove("links_change");
+        }
+
+        //pasa al hermano
+        el = el.nextSibling;
+      }
+      this.classList.add("links_change");
+    };
+  }
+
+  //subir datoss al storage
+  const txt_carga = viewHome.querySelector("#txt_carga");
+  const conDocumentos = viewHome.querySelector("#conDocumentos");
+  const conTareas = viewHome.querySelector("#conTareas");
+  const usuario = viewHome.querySelector("#usuario");
+  const Sintareas = viewHome.querySelector("#Sintareas");
+  const Sindocumentos = viewHome.querySelector("#Sindocumentos");
+
+  const cli = viewHome.querySelector("#mostrarCli");
+
+  const subir = viewHome.querySelector("#subir");
+
+  const file_upload = viewHome.querySelector("#file-upload");
+  file_upload.addEventListener("change", () => {
+    subir.classList.add("ocultar");
+    txt_carga.classList.add("ocultar");
+    conDocumentos.classList.remove("ocultar");
+    conTareas.classList.remove("ocultar");
+    usuario.classList.remove("ocultar");
+    Sintareas.classList.add("ocultar");
+    Sindocumentos.classList.add("ocultar");
+    cli.classList.remove("ocultar");
+    var pdrs = document.getElementById("file-upload").files[0].name;
+    document.getElementById("info").innerHTML = pdrs;
+    const mostrarDoc = document.getElementById("info");
+  });
+
+  link_documentos.addEventListener("click", () => {
+    mainDatos.classList.add("ocultar");
+    mainActuaciones.classList.add("ocultar");
+    mainDocumentos.classList.remove("ocultar");
+
+    rootRef.on("value", function (snapshot) {
+      var datos = snapshot.val();
+      var results = "";
+      for (var key in datos) {
+        console.log(datos[key].nombre);
+
+        results +=
+          '<div  class="name_info_down">' + datos[key].nombre + "</div>";
+      }
+
       document.getElementById("name_info").innerHTML = results;
       const click_show_doc = document.getElementById("name_info");
       click_show_doc.addEventListener("click", () => {
@@ -2083,10 +2089,8 @@ file_upload.addEventListener("change", ()=> {
           document.getElementById("verFiles").innerHTML = result;
         });
       });
-        const cambiarFond = viewHome.querySelector('.name_info_down')
-  
+      const cambiarFond = viewHome.querySelector(".name_info_down");
     });
-  
   });
 
   // link_datos.classList.add("links_change");
@@ -2106,7 +2110,6 @@ file_upload.addEventListener("change", ()=> {
   //     this.classList.add("links_change");
   //   };
   // }
-
 
   // //subir datoss al storage
 
@@ -2197,9 +2200,9 @@ file_upload.addEventListener("change", ()=> {
   const todayDate = String(date.getDate()).padStart(2, "0");
   const datePattern = year + "/" + monthNow + "/" + todayDate;
   const currentDate = todayDate + "/" + monthNow + "/" + yearNow;
- 
+
   const dateFromHomework = viewHome.querySelector("#date_fromHomework");
-  
+
   const btnCreateHomework = viewHome.querySelector("#btnCreate_homework");
 
   dateFromHomework.innerHTML = `
@@ -2211,8 +2214,8 @@ file_upload.addEventListener("change", ()=> {
   >
   <!-- <img src="./img/svg/calendar-red.svg" class="" alt="icono calendario" /> -->
 `;
-const inputDate2 = viewHome.querySelector("#inputDate2");
-localStorage.setItem("dateVencimiento", inputDate2.value);
+  const inputDate2 = viewHome.querySelector("#inputDate2");
+  localStorage.setItem("dateVencimiento", inputDate2.value);
   /******* Modal ingresar mensaje *******/
   const modalForm = viewHome.querySelector("#exampleModal");
   const btnShow_modal_message = viewHome.querySelector(
@@ -2238,26 +2241,26 @@ localStorage.setItem("dateVencimiento", inputDate2.value);
     modalForm.classList.remove("zIndexDown-modal");
   });
 
-
   btnCloseMessage.addEventListener("click", (e) => {
     e.preventDefault;
     modalForm.classList.remove("zIndexDown-modal");
   });
 
   //****** Crea template de la tabla con datos del formulario  *******/
-  
+
   // firestore - actualizar
-  const completedTask = (id) => firebase.firestore().collection('tasks').doc(id).update({
-    status: 'Finalizado',
-  });
+  const completedTask = (id) =>
+    firebase.firestore().collection("tasks").doc(id).update({
+      status: "Finalizado",
+    });
 
-  const pendingTask = (id) => firebase.firestore().collection('tasks').doc(id).update({
-    status: 'Pendiente',
-  });
-
+  const pendingTask = (id) =>
+    firebase.firestore().collection("tasks").doc(id).update({
+      status: "Pendiente",
+    });
 
   //****** Muestra encabezado al encontrar Docs ******/
-  const tableHead = viewHome.querySelector("#table-head")
+  const tableHead = viewHome.querySelector("#table-head");
 
   const tasksRef = firebase.firestore().collection("tasks");
 
@@ -2272,38 +2275,43 @@ localStorage.setItem("dateVencimiento", inputDate2.value);
     }
   });
 
- 
-    // firebase
-    //   .firestore()
-    //   .collection("homeWorks")
-    //   .get()
-    //   .then((res) => {
-    //     let countDoc = res.size;
-    //     console.log(countDoc);
+  // firebase
+  //   .firestore()
+  //   .collection("homeWorks")
+  //   .get()
+  //   .then((res) => {
+  //     let countDoc = res.size;
+  //     console.log(countDoc);
 
-    //     if (countDoc === 1) {
-    //       tableHead.classList.remove("hidde");
-    //     } else {
-    //       console.log("encabezado oculto");
-    //     }
-    //   });
+  //     if (countDoc === 1) {
+  //       tableHead.classList.remove("hidde");
+  //     } else {
+  //       console.log("encabezado oculto");
+  //     }
+  //   });
 
   //******* Mostrar registros de firebase ********/
   const tableTask = viewHome.querySelector("#tableTask");
-  
-    firebase
-      .firestore()
-      .collection("tasks")
-      .orderBy("taskName")
-      .onSnapshot((querySnapshot) => {
-        tableTask.innerHTML = "";
-        querySnapshot.forEach((doc) => {
-          const taskId = doc.id;
-          tableTask.innerHTML += `
+
+  firebase
+    .firestore()
+    .collection("tasks")
+    .orderBy("taskName")
+    .onSnapshot((querySnapshot) => {
+      tableTask.innerHTML = "";
+      querySnapshot.forEach((doc) => {
+        const taskId = doc.id;
+        tableTask.innerHTML += `
             <tr class="tdTable-createTask">
               <td class="chek-label td-name-task">
-              <input type="checkbox" id="cboxStatus${doc.id}" value="primary_checkbox" class="check-status" data-id="${doc.id}">
-              <label for="cboxStatus${doc.id}" class="">${doc.data().taskName}</label>
+              <input type="checkbox" id="cboxStatus${
+                doc.id
+              }" value="primary_checkbox" class="check-status" data-id="${
+          doc.id
+        }">
+              <label for="cboxStatus${doc.id}" class="">${
+          doc.data().taskName
+        }</label>
               </td>
               
               <td>
@@ -2322,27 +2330,32 @@ localStorage.setItem("dateVencimiento", inputDate2.value);
               </td>
               <td id="fRegister">${doc.data().date}</td>
               <td id="fVenci"><strong>${doc.data().expiration}</strong></td>
-              <td id="tStatus"  class="tStatus" data-id="${doc.id}">${doc.data().status}</td>
-              <td id="tStatus" class="tStatusPendiente" data-id="${doc.id}"></td>
+              <td id="tStatus"  class="tStatus" data-id="${doc.id}">${
+          doc.data().status
+        }</td>
+              <td id="tStatus" class="tStatusPendiente" data-id="${
+                doc.id
+              }"></td>
             </tr>
         `;
 
-/////////// Mostrar lista de tareas en documentos  */
-const mostrar_cards_tareas = () => {
-  //CREAR LISTA DE TAREAS EN VISTA DOCUMENTOS
+        /////////// Mostrar lista de tareas en documentos  */
+        const mostrar_cards_tareas = () => {
+          //CREAR LISTA DE TAREAS EN VISTA DOCUMENTOS
 
-  // const expirationDate = viewHome.querySelector("#inputDate2").value;
-  const container_principal_tarea = viewHome.querySelector("#prueba_tareas");
-  firebase
-    .firestore()
-    .collection("tasks")
-    .orderBy("taskName")
+          // const expirationDate = viewHome.querySelector("#inputDate2").value;
+          const container_principal_tarea =
+            viewHome.querySelector("#prueba_tareas");
+          firebase
+            .firestore()
+            .collection("tasks")
+            .orderBy("taskName")
 
-    .onSnapshot((querySnapshot) => {
-      container_principal_tarea.innerHTML = "";
+            .onSnapshot((querySnapshot) => {
+              container_principal_tarea.innerHTML = "";
 
-      querySnapshot.forEach((doc) => {
-        container_principal_tarea.innerHTML +=  `
+              querySnapshot.forEach((doc) => {
+                container_principal_tarea.innerHTML += `
 
 
 <div id="style_generalContainer_principal" style="margin-bottom:8px;"class="style_generalContainer_principal">
@@ -2375,84 +2388,72 @@ const mostrar_cards_tareas = () => {
     </label>
     <div class="d-flex flex-column ">
 
-    <div class="file_tarea" style="width: 183.58px;height: 15px;margin-top:15px;" data-id="${doc.id}">${doc.data().files}</div>
+    <div class="file_tarea" style="width: 183.58px;height: 15px;margin-top:15px;" data-id="${
+      doc.id
+    }">${doc.data().files}</div>
     <p id="date_documentos" style="width: 73px;height: 21px;">30/04/21</p>
     </div>
     <img  src="./img/svg/up_mostrar_doc_tareas.svg" id="arrows" class="ocultar" alt="" />  
 </div>
 
 </div>
-  `; 
-  const click_show_doc = viewHome.querySelectorAll(".file_tarea");
+  `;
+                const click_show_doc = viewHome.querySelectorAll(".file_tarea");
 
- 
-      click_show_doc.forEach((tarea) => {
+                click_show_doc.forEach((tarea) => {
+                  const color_fondo_list_tarea = viewHome.querySelector(
+                    "#container_tar_princial"
+                  );
+                  const container_doc_principal = viewHome.querySelector(
+                    "#container_doc_princial"
+                  );
+                  const arrows = viewHome.querySelector("#arrows");
+                  const arrows_doc = viewHome.querySelector("#arrows_doc");
+                  tarea.addEventListener("click", (e) => {
+                    // arrows.classList.remove('ocultar');
+                    arrows_doc.classList.add("ocultar");
 
-    const color_fondo_list_tarea = viewHome.querySelector("#container_tar_princial"); 
-    const container_doc_principal = viewHome.querySelector('#container_doc_princial');
-    const arrows = viewHome.querySelector("#arrows"); 
-    const arrows_doc = viewHome.querySelector("#arrows_doc");
-      tarea.addEventListener("click", (e) => {
+                    // color_fondo_list_tarea.style.background = "rgba(150, 156, 186, 0.2)";
+                    container_doc_principal.style.background = "white";
 
-        
-             
-        // arrows.classList.remove('ocultar');
-        arrows_doc.classList.add('ocultar'); 
-      
+                    console.log(e.target.dataset.id);
+                    const idDocTareas = e.target.dataset.id;
+                    e.preventDefault();
+                    rootRefTask.on("value", function (snapshot) {
+                      var datos = snapshot.val();
+                      console.log(datos);
+                      var result = "";
+                      for (var key in datos) {
+                        // console.log(datos[key].url);
+                        // console.log(datos[key].id);
 
-        // color_fondo_list_tarea.style.background = "rgba(150, 156, 186, 0.2)";
-           container_doc_principal.style.background = "white";
-         
-       
-        console.log(e.target.dataset.id);
-        const idDocTareas = e.target.dataset.id;
-        e.preventDefault();
-        rootRefTask.on("value", function (snapshot) {
-      
-          var datos = snapshot.val();
-          console.log(datos)
-          var result = "";
-          for (var key in datos) {
-            // console.log(datos[key].url);
-            // console.log(datos[key].id);
-           
-            if ( idDocTareas ===  datos[key].id) {
+                        if (idDocTareas === datos[key].id) {
+                          // console.log("si  es el ID");
 
-              // console.log("si  es el ID");
+                          result +=
+                            '<iframe  class="styleIframe"  src="' +
+                            datos[key].url +
+                            '"></iframe>';
+                        } else {
+                          // console.log("diferente id");
+                        }
+                      }
+                      document.getElementById("verFiles").innerHTML = result;
+                    });
+                  });
+                });
+              });
+            });
+        };
 
-              result +=
-                '<iframe  class="styleIframe"  src="' +
-                datos[key].url +
-                '"></iframe>';
-
-            } 
-            else {
-              // console.log("diferente id");
-
-            }
-          }
-          document.getElementById("verFiles").innerHTML = result;
-        });
-      });
-    });
-
-      });  
-    
-      
-  
-    });
-
-};
-
-// const tStatuss = tableTask.querySelectorAll(".tStatus");
-// tStatuss.forEach(() => {
-//       if(doc.data().status = "Pendiente"){ 
-//      console.log('pendiente');            
-//    } else if (doc.data().status = "Finalizado") {
-//      console.log("finalizado");
-//    }
-//  });
-
+        // const tStatuss = tableTask.querySelectorAll(".tStatus");
+        // tStatuss.forEach(() => {
+        //       if(doc.data().status = "Pendiente"){
+        //      console.log('pendiente');
+        //    } else if (doc.data().status = "Finalizado") {
+        //      console.log("finalizado");
+        //    }
+        //  });
 
         const checkStatus = tableTask.querySelectorAll(".check-status");
         const fRegister = tableTask.querySelector("#fRegister");
@@ -2460,11 +2461,11 @@ const mostrar_cards_tareas = () => {
         const tStatus = tableTask.querySelector("#tStatus");
 
         checkStatus.forEach((check) => {
-          check.checked = eval(window.localStorage.getItem(check.id))
+          check.checked = eval(window.localStorage.getItem(check.id));
 
           check.addEventListener("change", (e) => {
             e.preventDefault;
-            window.localStorage.setItem(check.id, check.checked)
+            window.localStorage.setItem(check.id, check.checked);
             console.log(e.target.dataset.id);
             if (check.checked) {
               console.log("CON check??");
@@ -2490,120 +2491,114 @@ const mostrar_cards_tareas = () => {
           });
         });
 
-          //******* subir documentos de Tareas a Storage *******/
-          //  const subirTask = viewHome.querySelector("#subirTask");
-          const file_uploadTask = viewHome.querySelector('#file-uploadTask');
+        //******* subir documentos de Tareas a Storage *******/
+        //  const subirTask = viewHome.querySelector("#subirTask");
+        const file_uploadTask = viewHome.querySelector("#file-uploadTask");
 
-          file_uploadTask.addEventListener("change", () => {
-            const nDocs =
-              document.getElementById(`file-uploadTask`).files[0].name;
+        file_uploadTask.addEventListener("change", () => {
+          const nDocs =
+            document.getElementById(`file-uploadTask`).files[0].name;
 
-            // document.getElementById(`infoTask`).innerHTML = nDocs;
-            // const mostrarDoc = document.getElementById("info");
+          // document.getElementById(`infoTask`).innerHTML = nDocs;
+          // const mostrarDoc = document.getElementById("info");
 
-            firebase
-              .firestore()
-              .collection("tasks")
-              .doc(doc.id)
-              .update({
-                // nameFile: nDocs,
-                files: [nDocs],
-              });    
-          });
-
-          const ficheroTask = viewHome.querySelector(`#file-uploadTask`);
-          ficheroTask.addEventListener("change", sendDocFirebase, false);
-
-          const storageRefTask = firebase.storage().ref();
-          const rootRefTask = firebase.database().ref().child("docTask");
-
-          function sendDocFirebase() {
-            console.log("subiendo");
-            const documentoSubirTask = ficheroTask.files[0];
-            console.log(documentoSubirTask);
-            const uploadTasks = storageRefTask
-              .child("docTask/" + documentoSubirTask.name)
-              .put(documentoSubirTask);
-
-            uploadTasks.on(
-              "state_changed",
-              function (snapshot) {},
-              function (error) {
-                console.log("hubo un error");
-              },
-              function () {
-                uploadTasks.snapshot.ref
-                  .getDownloadURL()
-                  .then(function (downloadURL) {
-                    // alert("se subió la imagen conURL", downloadURL);
-                    console.log("Uploaded a blob or file!");
-                    crearNodoEnBDFirebaseTask(
-                      documentoSubirTask.name,
-                      downloadURL,
-                      doc.id
-
-                    );
-                  });
-              }
-            );
-          }
-
-
-          function crearNodoEnBDFirebaseTask(name, url, id) {
-            rootRefTask.push({
-              nombre: name,
-              url: url,
-              id: id,
-
+          firebase
+            .firestore()
+            .collection("tasks")
+            .doc(doc.id)
+            .update({
+              // nameFile: nDocs,
+              files: [nDocs],
             });
-          }
+        });
+
+        const ficheroTask = viewHome.querySelector(`#file-uploadTask`);
+        ficheroTask.addEventListener("change", sendDocFirebase, false);
+
+        const storageRefTask = firebase.storage().ref();
+        const rootRefTask = firebase.database().ref().child("docTask");
+
+        function sendDocFirebase() {
+          console.log("subiendo");
+          const documentoSubirTask = ficheroTask.files[0];
+          console.log(documentoSubirTask);
+          const uploadTasks = storageRefTask
+            .child("docTask/" + documentoSubirTask.name)
+            .put(documentoSubirTask);
+
+          uploadTasks.on(
+            "state_changed",
+            function (snapshot) {},
+            function (error) {
+              console.log("hubo un error");
+            },
+            function () {
+              uploadTasks.snapshot.ref
+                .getDownloadURL()
+                .then(function (downloadURL) {
+                  // alert("se subió la imagen conURL", downloadURL);
+                  console.log("Uploaded a blob or file!");
+                  crearNodoEnBDFirebaseTask(
+                    documentoSubirTask.name,
+                    downloadURL,
+                    doc.id
+                  );
+                });
+            }
+          );
+        }
+
+        function crearNodoEnBDFirebaseTask(name, url, id) {
+          rootRefTask.push({
+            nombre: name,
+            url: url,
+            id: id,
+          });
+        }
 
         // Llamada a funcion mostrar CArds
-          mostrar_cards_tareas();
+        mostrar_cards_tareas();
       });
     });
 
-      const createHomework = () => {
-        tableHead.classList.remove("hidde")
-      }
-  
-    // const createHomework = () => {
-    // tableHead.classList.remove("hidde")
+  const createHomework = () => {
+    tableHead.classList.remove("hidde");
+  };
 
-    //  const expirationDate = viewHome.querySelector("#inputDate2").value;
-    //  localStorage.setItem("dateVencimiento", inputDate2.value);
+  // const createHomework = () => {
+  // tableHead.classList.remove("hidde")
 
-    // const containerTable = viewHome.querySelector("#container_table");
-    // const nameTask = viewHome.querySelector("#inputText1").value;
-    // localStorage.setItem("denomicacion", nameTask);
+  //  const expirationDate = viewHome.querySelector("#inputDate2").value;
+  //  localStorage.setItem("dateVencimiento", inputDate2.value);
 
+  // const containerTable = viewHome.querySelector("#container_table");
+  // const nameTask = viewHome.querySelector("#inputText1").value;
+  // localStorage.setItem("denomicacion", nameTask);
 
-    // const container_principal_tarea = viewHome.querySelector("#container_principal_tarea");
-    // const nameTask = viewHome.querySelector("#inputText1").value;
+  // const container_principal_tarea = viewHome.querySelector("#container_principal_tarea");
+  // const nameTask = viewHome.querySelector("#inputText1").value;
 
-    // console.log(nameTask)
-    // console.log(expirationDate)
+  // console.log(nameTask)
+  // console.log(expirationDate)
 
+  //     containerTable.innerHTML = `
+  //     <table class="table table-hover table-createTask">
+  //       <thead>
+  //         <tr class="thTable-createTask">
+  //           <th scope="col">Tareas</th>
+  //           <th scope="col">Documentos</th>
+  //           <th scope="col">Equipo</th>
+  //           <th scope="col">Registrado</th>
+  //           <th scope="col">Vencimiento</th>
+  //           <th scope="col">Estado</th>
+  //         </tr>
+  //       </thead>
 
-//     containerTable.innerHTML = `
-//     <table class="table table-hover table-createTask">
-//       <thead>
-//         <tr class="thTable-createTask">
-//           <th scope="col">Tareas</th>
-//           <th scope="col">Documentos</th>
-//           <th scope="col">Equipo</th>
-//           <th scope="col">Registrado</th>
-//           <th scope="col">Vencimiento</th>
-//           <th scope="col">Estado</th>
-//         </tr>
-//       </thead>
+  //       <tbody id="tableTask">
 
-//       <tbody id="tableTask">
-
-//       </tbody>
-//     </table>
-//  `;
-
+  //       </tbody>
+  //     </table>
+  //  `;
 
   // // firestore - actualizar
   // const completedTask = (id) => firebase.firestore().collection('tasks').doc(id).update({
@@ -2614,436 +2609,412 @@ const mostrar_cards_tareas = () => {
   //   status: 'Pendiente',
   // });
 
-    // const tableTask = viewHome.querySelector("#tableTask");
+  // const tableTask = viewHome.querySelector("#tableTask");
 
-    // firebase
-    //   .firestore()
-    //   .collection("tasks")
-    //   .orderBy("date", "desc")
-    //   .onSnapshot((querySnapshot) => {
-    //     tableTask.innerHTML = "";
-    //     querySnapshot.forEach((doc) => {
-    //       const taskId = doc.id;
-    //       tableTask.innerHTML += `
-    //         <tr class="tdTable-createTask">
-    //           <td class="chek-label td-name-task">
-    //           <input type="checkbox" id="cboxStatus${doc.id}" value="primary_checkbox" class="check-status" data-id="${doc.id}">
-    //           <label for="cboxStatus${doc.id}" class="">${doc.data().taskName}</label>
-    //           </td>
-              
-    //           <td>
-    //           <span class="docCount">${doc.data().files.length}</span>
+  // firebase
+  //   .firestore()
+  //   .collection("tasks")
+  //   .orderBy("date", "desc")
+  //   .onSnapshot((querySnapshot) => {
+  //     tableTask.innerHTML = "";
+  //     querySnapshot.forEach((doc) => {
+  //       const taskId = doc.id;
+  //       tableTask.innerHTML += `
+  //         <tr class="tdTable-createTask">
+  //           <td class="chek-label td-name-task">
+  //           <input type="checkbox" id="cboxStatus${doc.id}" value="primary_checkbox" class="check-status" data-id="${doc.id}">
+  //           <label for="cboxStatus${doc.id}" class="">${doc.data().taskName}</label>
+  //           </td>
 
-    //             <label for="file-uploadTask" id="subirTask" >
-    //               <img  src="./img/svg/clip.svg" class="img-clip" alt="adjunto" />
-    //             </label>
-    //             <input id="file-uploadTask" onchange='' type="file" style='display: none;'/>
-    //             <div id="infoTask">${doc.data().nameFile}</div>
-    //           </td>
+  //           <td>
+  //           <span class="docCount">${doc.data().files.length}</span>
 
-    //           <td class="tdCircle-blue">
-    //             <img src="./img/svg/circle_blue.svg" alt="iniciales" class="img-circle-blue" />
-    //             <span>${doc.data().initials}</span>
-    //           </td>
-    //           <td id="fRegister">${doc.data().date}</td>
-    //           <td id="fVenci"><strong>${doc.data().expiration}</strong></td>
-    //           <td id="tStatus" data-id="${doc.id}">${doc.data().status}</td>
-    //         </tr>
-    //     `;
+  //             <label for="file-uploadTask" id="subirTask" >
+  //               <img  src="./img/svg/clip.svg" class="img-clip" alt="adjunto" />
+  //             </label>
+  //             <input id="file-uploadTask" onchange='' type="file" style='display: none;'/>
+  //             <div id="infoTask">${doc.data().nameFile}</div>
+  //           </td>
 
-    //     const checkStatus = tableTask.querySelectorAll(".check-status");
-    //     const fRegister = tableTask.querySelector("#fRegister");
-    //     const fVenci = tableTask.querySelector("#fVenci");
-    //     const tStatus = tableTask.querySelector("#tStatus");
+  //           <td class="tdCircle-blue">
+  //             <img src="./img/svg/circle_blue.svg" alt="iniciales" class="img-circle-blue" />
+  //             <span>${doc.data().initials}</span>
+  //           </td>
+  //           <td id="fRegister">${doc.data().date}</td>
+  //           <td id="fVenci"><strong>${doc.data().expiration}</strong></td>
+  //           <td id="tStatus" data-id="${doc.id}">${doc.data().status}</td>
+  //         </tr>
+  //     `;
 
-    //     checkStatus.forEach((check) => {
-    //       check.addEventListener("change", (e) => {
-    //         e.preventDefault;
-    //         console.log(e.target.dataset.id);
-    //         if (check.checked) {
-    //           console.log("CON check??");
-    //           completedTask(e.target.dataset.id);
-    //           fRegister.classList.add("txt-tach");
-    //           fVenci.classList.add("txt-tach");
-    //           tStatus.classList.add("txt-green");
-    //         } else {
-    //           console.log("SIN check??");
-    //           pendingTask(e.target.dataset.id);
-    //           fRegister.classList.remove("txt-tach");
-    //           fVenci.classList.remove("txt-tach");
-    //           tStatus.classList.remove("txt-green");
-    //         }
-    //       });
-    //     });
+  //     const checkStatus = tableTask.querySelectorAll(".check-status");
+  //     const fRegister = tableTask.querySelector("#fRegister");
+  //     const fVenci = tableTask.querySelector("#fVenci");
+  //     const tStatus = tableTask.querySelector("#tStatus");
 
+  //     checkStatus.forEach((check) => {
+  //       check.addEventListener("change", (e) => {
+  //         e.preventDefault;
+  //         console.log(e.target.dataset.id);
+  //         if (check.checked) {
+  //           console.log("CON check??");
+  //           completedTask(e.target.dataset.id);
+  //           fRegister.classList.add("txt-tach");
+  //           fVenci.classList.add("txt-tach");
+  //           tStatus.classList.add("txt-green");
+  //         } else {
+  //           console.log("SIN check??");
+  //           pendingTask(e.target.dataset.id);
+  //           fRegister.classList.remove("txt-tach");
+  //           fVenci.classList.remove("txt-tach");
+  //           tStatus.classList.remove("txt-green");
+  //         }
+  //       });
+  //     });
 
+  // //*****************Cargar de archivos a firebase
+  // let file = "";
+  // let urlFile = "";
 
+  // const file_uploadTask = viewHome.querySelector("#file-uploadTask");
 
+  // file_uploadTask.addEventListener("change", (e) => {
+  //   console.log("cliqueaste");
+  //   const input = e.target;
+  //   const reader = new FileReader();
+  //   reader.onload = () => {
+  //     const dataURL = reader.result;
+  //     urlFile = dataURL;
+  //     console.log("🤔 urlFile", urlFile);
 
+  //   };
 
+  //   reader.readAsDataURL(input.files[0]);
+  //   file = e.target.files[0];
+  //   console.log("🙄file", file);
 
+  //   // Array temporal
+  //   let arry=[]
+  //   arry.push(file.name);
+  //   console.log(arry);
 
+  //   firebase.firestore().collection('tasks').doc(doc.id).update({
+  //     nameFile: file.name,
+  //     files: arry,
+  //   });
 
+  //   console.log("nombre de archivo", file.name);
+  //   console.log("Id de tarea", `${doc.id}`);
+  // });
 
-          // //*****************Cargar de archivos a firebase
-          // let file = "";
-          // let urlFile = "";
+  // const uploadFileTask = () => {
+  //   const refStorage =  firebase.storage().ref(`filesTask/${doc.id}/${file.name}`);
+  //   refStorage.put(file);
+  // }
 
-          // const file_uploadTask = viewHome.querySelector("#file-uploadTask");
+  // //******* subir documentos de Tareas a Storage *******/
+  // //  const subirTask = viewHome.querySelector("#subirTask");
+  // const file_uploadTask = viewHome.querySelector('#file-uploadTask');
 
-          // file_uploadTask.addEventListener("change", (e) => {
-          //   console.log("cliqueaste");
-          //   const input = e.target;
-          //   const reader = new FileReader();
-          //   reader.onload = () => {
-          //     const dataURL = reader.result;
-          //     urlFile = dataURL;
-          //     console.log("🤔 urlFile", urlFile);
+  // file_uploadTask.addEventListener("change", () => {
+  //   const nDocs =
+  //     document.getElementById(`file-uploadTask`).files[0].name;
 
-          //   };
+  //   // document.getElementById(`infoTask`).innerHTML = nDocs;
+  //   // const mostrarDoc = document.getElementById("info");
 
-          //   reader.readAsDataURL(input.files[0]);
-          //   file = e.target.files[0];
-          //   console.log("🙄file", file);
+  //   firebase
+  //     .firestore()
+  //     .collection("tasks")
+  //     .doc(doc.id)
+  //     .update({
+  //       // nameFile: nDocs,
+  //       files: [nDocs],
+  //     });
+  // });
 
-          //   // Array temporal
-          //   let arry=[]
-          //   arry.push(file.name);
-          //   console.log(arry);
+  // const ficheroTask = viewHome.querySelector(`#file-uploadTask`);
+  // ficheroTask.addEventListener("change", sendDocFirebase, false);
 
-          //   firebase.firestore().collection('tasks').doc(doc.id).update({
-          //     nameFile: file.name,
-          //     files: arry,
-          //   });
+  // const storageRefTask = firebase.storage().ref();
+  // const rootRefTask = firebase.database().ref().child("docTask");
 
-          //   console.log("nombre de archivo", file.name);
-          //   console.log("Id de tarea", `${doc.id}`);
-          // });
+  // function sendDocFirebase() {
+  //   console.log("subiendo");
+  //   const documentoSubirTask = ficheroTask.files[0];
+  //   console.log(documentoSubirTask);
+  //   const uploadTasks = storageRefTask
+  //     .child("docTask/" + documentoSubirTask.name)
+  //     .put(documentoSubirTask);
 
-          // const uploadFileTask = () => {
-          //   const refStorage =  firebase.storage().ref(`filesTask/${doc.id}/${file.name}`);
-          //   refStorage.put(file);
-          // }
+  //   uploadTasks.on(
+  //     "state_changed",
+  //     function (snapshot) {},
+  //     function (error) {
+  //       console.log("hubo un error");
+  //     },
+  //     function () {
+  //       uploadTasks.snapshot.ref
+  //         .getDownloadURL()
+  //         .then(function (downloadURL) {
+  //           // alert("se subió la imagen conURL", downloadURL);
+  //           console.log("Uploaded a blob or file!");
+  //           crearNodoEnBDFirebaseTask(
+  //             documentoSubirTask.name,
+  //             downloadURL,
+  //             doc.id
 
-          // //******* subir documentos de Tareas a Storage *******/
-          // //  const subirTask = viewHome.querySelector("#subirTask");
-          // const file_uploadTask = viewHome.querySelector('#file-uploadTask');
+  //           );
+  //         });
+  //     }
+  //   );
+  // }
 
-          // file_uploadTask.addEventListener("change", () => {
-          //   const nDocs =
-          //     document.getElementById(`file-uploadTask`).files[0].name;
+  // function crearNodoEnBDFirebaseTask(name, url, id) {
+  //   rootRefTask.push({
+  //     nombre: name,
+  //     url: url,
+  //     id: id,
 
-          //   // document.getElementById(`infoTask`).innerHTML = nDocs;
-          //   // const mostrarDoc = document.getElementById("info");
+  //   });
+  // }
+  //EMPIEZA MOSTRARA TAREA
+  // mostrar_tareas.addEventListener('click',() =>{
+  //   tareas_ver.classList.remove("ocultar");
+  //   mostrar_tareas.classList.add("ocultar");
+  //   here_tareas.classList.remove("ocultar");
+  //   informationDoc_ocultar.classList.add("ocultarDoc");
 
-          //   firebase
-          //     .firestore()
-          //     .collection("tasks")
-          //     .doc(doc.id)
-          //     .update({
-          //       // nameFile: nDocs,
-          //       files: [nDocs],
-          //     });    
-          // });
+  //   const rootRefTask = firebase.database().ref().child("docTask");
 
-          // const ficheroTask = viewHome.querySelector(`#file-uploadTask`);
-          // ficheroTask.addEventListener("change", sendDocFirebase, false);
+  //   rootRefTask.on('value', function(snapshot){
+  //     var datos = snapshot.val();
+  //     var results = ""
+  //     for(var key in datos){
 
-          // const storageRefTask = firebase.storage().ref();
-          // const rootRefTask = firebase.database().ref().child("docTask");
+  //       console.log(datos[key].nombre)
 
-          // function sendDocFirebase() {
-          //   console.log("subiendo");
-          //   const documentoSubirTask = ficheroTask.files[0];
-          //   console.log(documentoSubirTask);
-          //   const uploadTasks = storageRefTask
-          //     .child("docTask/" + documentoSubirTask.name)
-          //     .put(documentoSubirTask);
+  //       results +=  '<div  class="name_info_down1">'+datos[key].nombre+'</div>';
 
-          //   uploadTasks.on(
-          //     "state_changed",
-          //     function (snapshot) {},
-          //     function (error) {
-          //       console.log("hubo un error");
-          //     },
-          //     function () {
-          //       uploadTasks.snapshot.ref
-          //         .getDownloadURL()
-          //         .then(function (downloadURL) {
-          //           // alert("se subió la imagen conURL", downloadURL);
-          //           console.log("Uploaded a blob or file!");
-          //           crearNodoEnBDFirebaseTask(
-          //             documentoSubirTask.name,
-          //             downloadURL,
-          //             doc.id
+  //     }
+  //     document.getElementById("file_tarea").innerHTML= results;
 
-          //           );
-          //         });
-          //     }
-          //   );
-          // }
+  //     // const cambiarFond = viewHome.querySelector('#file_tarea')
+  //     // cambiarFond.addEventListener('click', () => {
+  //     //   console.log('aqui')
+  //     //   viewHome.querySelector("#doc_select").style.background = 'rgba(150, 156, 186, 0.2)'
+  //     // });
 
+  // });
 
-          // function crearNodoEnBDFirebaseTask(name, url, id) {
-          //   rootRefTask.push({
-          //     nombre: name,
-          //     url: url,
-          //     id: id,
+  // const click_show_doc = document.getElementById("file_tarea");
+  // click_show_doc.addEventListener("click", () => {
 
-          //   });
-          // }
-    //EMPIEZA MOSTRARA TAREA
-          // mostrar_tareas.addEventListener('click',() =>{
-          //   tareas_ver.classList.remove("ocultar");
-          //   mostrar_tareas.classList.add("ocultar");
-          //   here_tareas.classList.remove("ocultar");
-          //   informationDoc_ocultar.classList.add("ocultarDoc");
-        
-            
-          
-        //   const rootRefTask = firebase.database().ref().child("docTask");
-        
-        //   rootRefTask.on('value', function(snapshot){
-        //     var datos = snapshot.val();
-        //     var results = "" 
-        //     for(var key in datos){
-        
-        //       console.log(datos[key].nombre)
-            
-        //       results +=  '<div  class="name_info_down1">'+datos[key].nombre+'</div>';
-              
-        //     } 
-        //     document.getElementById("file_tarea").innerHTML= results;
-        
-        //     // const cambiarFond = viewHome.querySelector('#file_tarea')
-        //     // cambiarFond.addEventListener('click', () => {
-        //     //   console.log('aqui')
-        //     //   viewHome.querySelector("#doc_select").style.background = 'rgba(150, 156, 186, 0.2)'
-        //     // });
-        
-        // });
-        
-        // const click_show_doc = document.getElementById("file_tarea");
-        // click_show_doc.addEventListener("click", () => {
-        
-        
-        //     rootRefTask.on("value", function (snapshot) {
-        //       var datos = snapshot.val();
-        //       var result = "";
-        //       for (var key in datos) {
-        //         console.log(datos[key].url);
-        //         console.log(datos[key].id);
-        
-        //         if(datos[key].id === doc.id){
-        //           result +=
-        //           '<iframe  class="styleIframe"  src="' +
-        //           datos[key].url +
-        //           '"></iframe>';
-        //         }else{
-        //           console.log('diferente id')
-        //         }
-        //       }
-        //       document.getElementById("verFiles").innerHTML = result;
-        //     });
-        // });
-        // });
+  //     rootRefTask.on("value", function (snapshot) {
+  //       var datos = snapshot.val();
+  //       var result = "";
+  //       for (var key in datos) {
+  //         console.log(datos[key].url);
+  //         console.log(datos[key].id);
 
-        //TERMINA MOSTRAR TAREA
+  //         if(datos[key].id === doc.id){
+  //           result +=
+  //           '<iframe  class="styleIframe"  src="' +
+  //           datos[key].url +
+  //           '"></iframe>';
+  //         }else{
+  //           console.log('diferente id')
+  //         }
+  //       }
+  //       document.getElementById("verFiles").innerHTML = result;
+  //     });
+  // });
+  // });
 
-      //   mostrar_tareas.addEventListener('click',() =>{
-   
-      //       //CREAR LISTA DE TAREAS EN VISTA DOCUMENTOS
-    
-      //   // const expirationDate = viewHome.querySelector("#inputDate2").value;
-      //   const container_principal_tarea = viewHome.querySelector("#prueba_tareas");
-      //   firebase.firestore()
-      //   .collection("tasks").onSnapshot((querySnapshot) => {
-      //   container_principal_tarea.innerHTML='';
-    
-      
-      //   querySnapshot.forEach((doc) => {
-      //     // console.log(doc.data())
-    
-       
-      //   // console.log(doc.data())
-      //   //  console.log(`${doc.id} => ${doc.data().name}`);
-      //   container_principal_tarea.innerHTML += `
-    
-      //   <div id="style_generalContainer_principal" class="style_generalContainer_principal">
-                 
-      
-    
-      //   <div  id="container_principal_tarea">
-      //   <div style="width: 231px;height: 21px;">
-      //   <p class="styles_principal"><strong>Tarea 1 </strong></p>
-      //   <p class="styles_principal">${doc.data().taskName}</p>
-      // </div>
-    
-      // <div style="width: 61px;height: 21px;">
-      //   <p class="styles_principal" style='color:#D70025'><strong>Vence:</strong></p>
-      //   <p id="date_documentos" style='color:#D70025'>${doc.data().expiration}</p>
-      // </div>
-      //   </div>
-    
-      //   <div class="d-flex flex-row align-items-center " id="container_doc_princial">
-      //   <p style="margin-left:24px;
-      //     font-family: Raleway;
-      //     font-style: normal;
-      //     font-weight: 600;
-      //     font-size: 12px;
-      //     line-height: 14px;
-      //    margin-right:12px;
-      //     color: #0F3041;" >01.</p>
-      //     <label for="file-upload"  style="margin-left:0px;">
-      //     <img  src="./img/svg/clicdoc.svg" alt="" />
-      //       </label>
-      //       <div class="d-flex flex-column ">
-      //       <div id="file_tarea" style="width: 183.58px;height: 15px;margin-top:15px;">${doc.data().files}</div>
-      //       <p id="date_documentos" style="width: 73px;height: 21px;">30/04/21</p>
-      //       </div>
-      //   </div>
-    
-      //   </div>
-      //     ` ; 
-    
-              
-      //   //   const nameClick = viewHome.querySelector('#file_tarea');
-      //   //   nameClick.addEventListener('click', (e) => {
-      //   //     e.preventDefault();
-      //   //     console.log('funciona please')
-      //   //     firebase.firestore()
-      //   // .collection("tasks").onSnapshot((querySnapshot) => {
-      //   //   document.getElementById("verFiles").innerHTML='';
-      //   // querySnapshot.forEach((doc) => {
-      //   //     console.log(`${doc.data().file}`)
-      //   //     document.getElementById("verFiles").innerHTML +=`
-      //   //      <iframe  class="styleIframe"  src="${doc.data().files}"></iframe>
-      //   //             `;
-      //   //           })
-      //   //         })     
-      //   //       }) 
+  //TERMINA MOSTRAR TAREA
 
-      //         //******************* */
-      //       //   const rootRefTask = firebase.database().ref().child("docTask");
-        
-      //       //   rootRefTask.on('value', function(snapshot){
-      //       //     var datos = snapshot.val();
-      //       //     var results = "" 
-      //       //     for(var key in datos){
-            
-      //       //       console.log(datos[key].nombre)
-                
-      //       //       results +=  '<div  class="name_info_down1">'+datos[key].nombre+'</div>';
-                  
-      //       //     } 
-      //       //     document.getElementById("file_tarea").innerHTML= results;
-            
-      //       //     // const cambiarFond = viewHome.querySelector('#file_tarea')
-      //       //     // cambiarFond.addEventListener('click', () => {
-      //       //     //   console.log('aqui')
-      //       //     //   viewHome.querySelector("#doc_select").style.background = 'rgba(150, 156, 186, 0.2)'
-      //       //     // });
-            
-      //       // });
-            
-    
-      //     });
+  //   mostrar_tareas.addEventListener('click',() =>{
 
-          
-      //     const click_show_doc = document.getElementById("file_tarea");
-      //     click_show_doc.addEventListener("click", () => {
-          
-          
-      //         rootRefTask.on("value", function (snapshot) {
-      //           var datos = snapshot.val();
-      //           var result = "";
-      //           for (var key in datos) {
-      //             console.log(datos[key].url);
-      //             console.log(datos[key].id);
-          
-      //             if(datos[key].id === doc.id){
+  //       //CREAR LISTA DE TAREAS EN VISTA DOCUMENTOS
 
-      //               console.log('si  es el ID')
-      //               result +=
-      //               '<iframe  class="styleIframe"  src="' +
-      //               datos[key].url +
-      //               '"></iframe>';
-      //             }else{
-      //               console.log('diferente id')
-      //               result +=
-      //               '<iframe  class="styleIframe"  src=""></iframe>';
-      //             }
-      //           }
-      //           document.getElementById("verFiles").innerHTML = result;
-      //         });
-      //     });
-      //     });
-      // });
+  //   // const expirationDate = viewHome.querySelector("#inputDate2").value;
+  //   const container_principal_tarea = viewHome.querySelector("#prueba_tareas");
+  //   firebase.firestore()
+  //   .collection("tasks").onSnapshot((querySnapshot) => {
+  //   container_principal_tarea.innerHTML='';
 
-        //TERMINA OTRA MOSTRAS TAREA
-        // });
+  //   querySnapshot.forEach((doc) => {
+  //     // console.log(doc.data())
 
-        // const toggle = viewHome.querySelector("#cbox1");
-        // const txtStatus = viewHome.querySelector("#txt-status");
+  //   // console.log(doc.data())
+  //   //  console.log(`${doc.id} => ${doc.data().name}`);
+  //   container_principal_tarea.innerHTML += `
 
+  //   <div id="style_generalContainer_principal" class="style_generalContainer_principal">
 
-        // toggle.addEventListener("change", function () {
-        //   txtStatus.style.color = this.checked
-        //     ? "#31CC53"
-        //     : "#0F3041";
-        //   console.log("VERDE");
-        // });
+  //   <div  id="container_principal_tarea">
+  //   <div style="width: 231px;height: 21px;">
+  //   <p class="styles_principal"><strong>Tarea 1 </strong></p>
+  //   <p class="styles_principal">${doc.data().taskName}</p>
+  // </div>
 
-      // });
-// };
+  // <div style="width: 61px;height: 21px;">
+  //   <p class="styles_principal" style='color:#D70025'><strong>Vence:</strong></p>
+  //   <p id="date_documentos" style='color:#D70025'>${doc.data().expiration}</p>
+  // </div>
+  //   </div>
 
+  //   <div class="d-flex flex-row align-items-center " id="container_doc_princial">
+  //   <p style="margin-left:24px;
+  //     font-family: Raleway;
+  //     font-style: normal;
+  //     font-weight: 600;
+  //     font-size: 12px;
+  //     line-height: 14px;
+  //    margin-right:12px;
+  //     color: #0F3041;" >01.</p>
+  //     <label for="file-upload"  style="margin-left:0px;">
+  //     <img  src="./img/svg/clicdoc.svg" alt="" />
+  //       </label>
+  //       <div class="d-flex flex-column ">
+  //       <div id="file_tarea" style="width: 183.58px;height: 15px;margin-top:15px;">${doc.data().files}</div>
+  //       <p id="date_documentos" style="width: 73px;height: 21px;">30/04/21</p>
+  //       </div>
+  //   </div>
 
-   
-    //*******Validando campos del formulario********//
-    const homeworkValidInputs = () => {
-      const inputDenominacion = viewHome.querySelector("#inputText1");
-      const dateVencimiento = viewHome.querySelector("#inputDate2");
-      const inputDestinatario = viewHome.querySelector("#inputText3");
-      const inputCorreo = viewHome.querySelector("#inputText4");
-      const textareaModal = viewHome.querySelector("#textareaModal");
-   
-      if (
-        inputDenominacion.value === "" ||
-        inputDestinatario.value === "" ||
-        inputCorreo.value === "" ||
-        textareaModal.value === ""
-      ) {
-        console.log("campos vacios");
-        btnCreateHomework.classList.add("btnDisabled");
-        btnCreateHomework.disabled = true;
-      } else {
-        console.log("campos llenos");
-        btnCreateHomework.classList.remove("btnDisabled");
-        btnCreateHomework.disabled = false;
-      }
-   
-      // else if (
-      //   inputDenominacion.validity.valid &&
-      //   inputDestinatario.validity.valid &&
-      //   inputCorreo.validity.valid &&
-      //   inputMensaje.validity.valid
-      // ) {
+  //   </div>
+  //     ` ;
+
+  //   //   const nameClick = viewHome.querySelector('#file_tarea');
+  //   //   nameClick.addEventListener('click', (e) => {
+  //   //     e.preventDefault();
+  //   //     console.log('funciona please')
+  //   //     firebase.firestore()
+  //   // .collection("tasks").onSnapshot((querySnapshot) => {
+  //   //   document.getElementById("verFiles").innerHTML='';
+  //   // querySnapshot.forEach((doc) => {
+  //   //     console.log(`${doc.data().file}`)
+  //   //     document.getElementById("verFiles").innerHTML +=`
+  //   //      <iframe  class="styleIframe"  src="${doc.data().files}"></iframe>
+  //   //             `;
+  //   //           })
+  //   //         })
+  //   //       })
+
+  //         //******************* */
+  //       //   const rootRefTask = firebase.database().ref().child("docTask");
+
+  //       //   rootRefTask.on('value', function(snapshot){
+  //       //     var datos = snapshot.val();
+  //       //     var results = ""
+  //       //     for(var key in datos){
+
+  //       //       console.log(datos[key].nombre)
+
+  //       //       results +=  '<div  class="name_info_down1">'+datos[key].nombre+'</div>';
+
+  //       //     }
+  //       //     document.getElementById("file_tarea").innerHTML= results;
+
+  //       //     // const cambiarFond = viewHome.querySelector('#file_tarea')
+  //       //     // cambiarFond.addEventListener('click', () => {
+  //       //     //   console.log('aqui')
+  //       //     //   viewHome.querySelector("#doc_select").style.background = 'rgba(150, 156, 186, 0.2)'
+  //       //     // });
+
+  //       // });
+
+  //     });
+
+  //     const click_show_doc = document.getElementById("file_tarea");
+  //     click_show_doc.addEventListener("click", () => {
+
+  //         rootRefTask.on("value", function (snapshot) {
+  //           var datos = snapshot.val();
+  //           var result = "";
+  //           for (var key in datos) {
+  //             console.log(datos[key].url);
+  //             console.log(datos[key].id);
+
+  //             if(datos[key].id === doc.id){
+
+  //               console.log('si  es el ID')
+  //               result +=
+  //               '<iframe  class="styleIframe"  src="' +
+  //               datos[key].url +
+  //               '"></iframe>';
+  //             }else{
+  //               console.log('diferente id')
+  //               result +=
+  //               '<iframe  class="styleIframe"  src=""></iframe>';
+  //             }
+  //           }
+  //           document.getElementById("verFiles").innerHTML = result;
+  //         });
+  //     });
+  //     });
+  // });
+
+  //TERMINA OTRA MOSTRAS TAREA
+  // });
+
+  // const toggle = viewHome.querySelector("#cbox1");
+  // const txtStatus = viewHome.querySelector("#txt-status");
+
+  // toggle.addEventListener("change", function () {
+  //   txtStatus.style.color = this.checked
+  //     ? "#31CC53"
+  //     : "#0F3041";
+  //   console.log("VERDE");
+  // });
+
+  // });
+  // };
+
+  //*******Validando campos del formulario********//
+  const homeworkValidInputs = () => {
+    const inputDenominacion = viewHome.querySelector("#inputText1");
+    const dateVencimiento = viewHome.querySelector("#inputDate2");
+    const inputDestinatario = viewHome.querySelector("#inputText3");
+    const inputCorreo = viewHome.querySelector("#inputText4");
+    const textareaModal = viewHome.querySelector("#textareaModal");
+
+    if (
+      inputDenominacion.value === "" ||
+      inputDestinatario.value === "" ||
+      inputCorreo.value === "" ||
+      textareaModal.value === ""
+    ) {
+      console.log("campos vacios");
+      btnCreateHomework.classList.add("btnDisabled");
+      btnCreateHomework.disabled = true;
+    } else {
+      console.log("campos llenos");
+      btnCreateHomework.classList.remove("btnDisabled");
+      btnCreateHomework.disabled = false;
+    }
+
+    // else if (
+    //   inputDenominacion.validity.valid &&
+    //   inputDestinatario.validity.valid &&
+    //   inputCorreo.validity.valid &&
+    //   inputMensaje.validity.valid
+    // ) {
     //   btnCreateHomework.classList.remove("btnDisabled");
     //   btnCreateHomework.disabled = false;
     // }
   };
- 
+
   const inputDenominacion = viewHome.querySelector("#inputText1");
   const dateVencimiento = viewHome.querySelector("#inputDate2");
   const inputDestinatario = viewHome.querySelector("#inputText3");
   const inputCorreo = viewHome.querySelector("#inputText4");
   // const textarea5 = viewHome.querySelector("textarea5");
- 
+
   inputDenominacion.addEventListener("input", homeworkValidInputs);
   inputDestinatario.addEventListener("input", homeworkValidInputs);
   inputCorreo.addEventListener("input", homeworkValidInputs);
   textareaModal.addEventListener("input", homeworkValidInputs);
- 
+
   //******** Limpia inputs ********/
   const cleanInputs = () => {
     inputDenominacion.value = "";
@@ -3052,9 +3023,9 @@ const mostrar_cards_tareas = () => {
     textarea5.value = "";
     textareaModal.value = "";
   };
- 
+
   const showModalTaskform = viewHome.querySelector("#showModal_taskform");
- 
+
   //******* botón Crear tarea - abre modal del formulario *******/
   showModalTaskform.addEventListener("click", (e) => {
     e.preventDefault;
@@ -3063,7 +3034,7 @@ const mostrar_cards_tareas = () => {
     btnCreateHomework.classList.add("btnDisabled");
     btnCreateHomework.disabled = true;
   });
- 
+
   //***** botón CREAR TAREA del formulario ******/
   btnCreateHomework.addEventListener("click", (e) => {
     e.preventDefault;
@@ -3083,8 +3054,11 @@ const mostrar_cards_tareas = () => {
     let taskExpi = reversedFecha.join("/");
 
     // // Iniciales del destinatario
-    let initials = Array.prototype.map.call(taskReceiver.split(" "), function(x){ return x.substring(0,1).toUpperCase();}).join('');
-
+    let initials = Array.prototype.map
+      .call(taskReceiver.split(" "), function (x) {
+        return x.substring(0, 1).toUpperCase();
+      })
+      .join("");
 
     const newTask = {
       taskName: taskName,
@@ -3106,200 +3080,429 @@ const mostrar_cards_tareas = () => {
 
     createHomework();
     cleanInputs();
-
   });
 
+  // });
+  // };
 
-// });
-// };
+  //  //******* subir documentos de Tareas a Storage *******/
+  //     //  const subirTask = viewHome.querySelector("#subirTask");
+  //     const file_uploadTask = viewHome.querySelector("#file-uploadTask");
 
- 
-//  //******* subir documentos de Tareas a Storage *******/
-//     //  const subirTask = viewHome.querySelector("#subirTask");
-//     const file_uploadTask = viewHome.querySelector("#file-uploadTask");
- 
-//     file_uploadTask.addEventListener("change", () => {
-//       const nDocs = document.getElementById("file-uploadTask").files[0].name;
-//       document.getElementById("infoTask").innerHTML = nDocs;
-     
-//     });
- 
-//     const ficheroTask = viewHome.querySelector("#file-uploadTask");
-//     ficheroTask.addEventListener("change", sendDocFirebase, false);
+  //     file_uploadTask.addEventListener("change", () => {
+  //       const nDocs = document.getElementById("file-uploadTask").files[0].name;
+  //       document.getElementById("infoTask").innerHTML = nDocs;
 
+  //     });
 
-//     const storageRefTask = firebase.storage().ref();
-//     const rootRefTask = firebase.database().ref().child("docTask");
-//     function sendDocFirebase() {
-//       //     console.log("subiendo")
-//       const documentoSubirTask = ficheroTask.files[0];
-//       console.log(documentoSubirTask);
-//       const uploadTasks = storageRefTask
-//         .child("docTask/" + documentoSubirTask.name)
-//         .put(documentoSubirTask);
- 
-//       uploadTasks.on(
-//         "state_changed",
-//         function (snapshot) {},
-//         function (error) {
-//           alert("hubo un error");
-//         },
-//         function () {
-//           uploadTasks.snapshot.ref
-//             .getDownloadURL()
-//             .then(function (downloadURL) {
-//               alert("se subió la imagen conURL", downloadURL);
-//               console.log("Uploaded a blob or file!");
-//               crearNodoEnBDFirebaseTask(documentoSubirTask.name, downloadURL);
-//             });
-//         }
-//       );
-//     };
+  //     const ficheroTask = viewHome.querySelector("#file-uploadTask");
+  //     ficheroTask.addEventListener("change", sendDocFirebase, false);
 
- 
-// function  crearNodoEnBDFirebaseTask(name,url){
-//   rootRefTask.push({
-//   nombre:name,
-//   url:url,
-// })
-// }
-// });
-// //cambiar logo Sunafil una ver sincronizado
-// // const cambiarLogo = viewHome.querySelector('#btn_entrar_minimodal_sunafil');
-// // const sunafilS = viewHome.querySelector('#sunafil');
-// // const sunafilBlue = viewHome.querySelector('#sunafilBlue');
-// //     cambiarLogo.addEventListener('click', ()=>{
-// // sunafilS.classList.add('ocultar');
-// // sunafilBlue.classList.remove('ocultar');
-// //     })
+  //     const storageRefTask = firebase.storage().ref();
+  //     const rootRefTask = firebase.database().ref().child("docTask");
+  //     function sendDocFirebase() {
+  //       //     console.log("subiendo")
+  //       const documentoSubirTask = ficheroTask.files[0];
+  //       console.log(documentoSubirTask);
+  //       const uploadTasks = storageRefTask
+  //         .child("docTask/" + documentoSubirTask.name)
+  //         .put(documentoSubirTask);
 
+  //       uploadTasks.on(
+  //         "state_changed",
+  //         function (snapshot) {},
+  //         function (error) {
+  //           alert("hubo un error");
+  //         },
+  //         function () {
+  //           uploadTasks.snapshot.ref
+  //             .getDownloadURL()
+  //             .then(function (downloadURL) {
+  //               alert("se subió la imagen conURL", downloadURL);
+  //               console.log("Uploaded a blob or file!");
+  //               crearNodoEnBDFirebaseTask(documentoSubirTask.name, downloadURL);
+  //             });
+  //         }
+  //       );
+  //     };
 
-    //mostar tareas en documentos
+  // function  crearNodoEnBDFirebaseTask(name,url){
+  //   rootRefTask.push({
+  //   nombre:name,
+  //   url:url,
+  // })
+  // }
+  // });
+  // //cambiar logo Sunafil una ver sincronizado
+  // // const cambiarLogo = viewHome.querySelector('#btn_entrar_minimodal_sunafil');
+  // // const sunafilS = viewHome.querySelector('#sunafil');
+  // // const sunafilBlue = viewHome.querySelector('#sunafilBlue');
+  // //     cambiarLogo.addEventListener('click', ()=>{
+  // // sunafilS.classList.add('ocultar');
+  // // sunafilBlue.classList.remove('ocultar');
+  // //     })
 
-    const mostrar_tareas = viewHome.querySelector('#mostrar_tareas');
-    const tareas_ver = viewHome.querySelector('#tareas_ver');
-    const here_tareas = viewHome.querySelector('#here_tareas');
-    const informationDoc_ocultar = viewHome.querySelector('#informationDoc_ocultar');
+  //mostar tareas en documentos
 
-   
-  
+  const mostrar_tareas = viewHome.querySelector("#mostrar_tareas");
+  const tareas_ver = viewHome.querySelector("#tareas_ver");
+  const here_tareas = viewHome.querySelector("#here_tareas");
+  const informationDoc_ocultar = viewHome.querySelector(
+    "#informationDoc_ocultar"
+  );
 
- 
- 
-  here_tareas.addEventListener('click' , () => {
+  here_tareas.addEventListener("click", () => {
     tareas_ver.classList.add("ocultar");
     mostrar_tareas.classList.remove("ocultar");
     here_tareas.classList.add("ocultar");
     informationDoc_ocultar.classList.remove("ocultarDoc");
   });
 
+  //subir y traer files para see en documentos
 
-    //subir y traer files para see en documentos
-    
-  
-    let stars = viewHome.querySelectorAll('.star');
-    viewHome.querySelector('.star-container').addEventListener('click', starRating);
-   
-    
-    function starRating(e) {
-      const star = e.target;
-      const val = star.getAttribute('data-val');
-    
-      stars.forEach((star) => star.classList.remove('star__checked'));
-    
-      star.classList.add('star__checked');
-     
-    }
+  let stars = viewHome.querySelectorAll(".star");
+  viewHome
+    .querySelector(".star-container")
+    .addEventListener("click", starRating);
 
-    mostrar_tareas.addEventListener('click',() =>{
-      tareas_ver.classList.remove("ocultar");
-      mostrar_tareas.classList.add("ocultar");
-      here_tareas.classList.remove("ocultar");
-      informationDoc_ocultar.classList.add("ocultarDoc");
-    });
+  function starRating(e) {
+    const star = e.target;
+    const val = star.getAttribute("data-val");
 
-    const casoSeleccionado = viewHome.querySelector('#casoSeleccionado');
-    const casoNuevo = viewHome.querySelector('#casoNuevo');
+    stars.forEach((star) => star.classList.remove("star__checked"));
 
-    const flex_container_datos = viewHome.querySelector('#flex-container_datos');
-    const container_actuacionenproceso = viewHome.querySelector('#container_actuacionenproceso');
-    const container_actuacion = viewHome.querySelector('#container_actuacion');
+    star.classList.add("star__checked");
+  }
 
-    if(tipo_actuacion != "")
-   {
-    casoSeleccionado.classList.remove('ocultar');
-    casoNuevo.classList.add('ocultar');
-    casoNuevo.classList.add('ocultar');
-    flex_container_datos.classList.remove('ocultar');
-    flex_container_datos.style.display ="flex";
-    container_actuacionenproceso.classList.add('ocultar');
-    container_actuacion.classList.remove('ocultar');
-    console.log("holis")
-   }else{
-    casoSeleccionado.classList.add('ocultar');
-    casoNuevo.classList.remove('ocultar');
-    flex_container_datos.classList.add('ocultar');
-    container_actuacionenproceso.classList.remove('ocultar');
-    container_actuacion.classList.add('ocultar');
-   };
-
-// SUMAR DOCUMENTOS
-
-var sumaDocumentos = 0; 
-// Sum the count of each shard in the subcollection
-firebase.firestore().collection('tasks').where("files","!=",[]).get().then((snapshot) => {
-  let total_count = 1;
-  snapshot.forEach((doc) => {
-      total_count += doc.data().count;
-      console.log(total_count)
-      sumaDocumentos += total_count;
-      console.log(sumaDocumentos)
-      const sumaTotalDocumentos = sumaDocumentos + 1
-
-      console.log(sumaTotalDocumentos)
-
-      const sumaTotalDocumentosContainer = viewHome.querySelector('#sumaTotalDocumentos');
-      const ceroDocumentos = viewHome.querySelector('#ceroDocumentos');
-      sumaTotalDocumentosContainer.classList.remove('ocultar')
-      ceroDocumentos.classList.add('ocultar')
-      sumaTotalDocumentosContainer.innerHTML = `
-      <p class="text_Resolution"  style="font-size: 10px;">${sumaTotalDocumentos}</p>
-      <p class="text_tipoResolution">Documentos</p>`
-      console.log(sumaTotalDocumentos)
-
+  mostrar_tareas.addEventListener("click", () => {
+    tareas_ver.classList.remove("ocultar");
+    mostrar_tareas.classList.add("ocultar");
+    here_tareas.classList.remove("ocultar");
+    informationDoc_ocultar.classList.add("ocultarDoc");
   });
 
-});
-//SUMAR PENDIENTES
+  const casoSeleccionado = viewHome.querySelector("#casoSeleccionado");
+  const casoNuevo = viewHome.querySelector("#casoNuevo");
 
-  var sumaPendiente = 0; 
-      // Sum the count of each shard in the subcollection
-      firebase.firestore().collection('tasks').where("status", "==", "Pendiente").get().then((snapshot) => {
-        let total_count = 1;
-        snapshot.forEach((doc) => {
-            total_count += doc.data().count;
-            console.log(total_count)
-            sumaPendiente += total_count;
-            console.log(sumaPendiente)
-            const sumaTotalPendiente = sumaPendiente
+  const flex_container_datos = viewHome.querySelector("#flex-container_datos");
+  const container_actuacionenproceso = viewHome.querySelector(
+    "#container_actuacionenproceso"
+  );
+  const container_actuacion = viewHome.querySelector("#container_actuacion");
 
-            console.log(sumaTotalPendiente)
+  if (tipo_actuacion != "") {
+    casoSeleccionado.classList.remove("ocultar");
+    casoNuevo.classList.add("ocultar");
+    casoNuevo.classList.add("ocultar");
+    flex_container_datos.classList.remove("ocultar");
+    flex_container_datos.style.display = "flex";
+    container_actuacionenproceso.classList.add("ocultar");
+    container_actuacion.classList.remove("ocultar");
+    console.log("holis");
+  } else {
+    casoSeleccionado.classList.add("ocultar");
+    casoNuevo.classList.remove("ocultar");
+    flex_container_datos.classList.add("ocultar");
+    container_actuacionenproceso.classList.remove("ocultar");
+    container_actuacion.classList.add("ocultar");
+  }
 
-            const sumaTotalPendienteContainer = viewHome.querySelector('#sumaTotalPendiente');
-            const ceroPendiente = viewHome.querySelector('#ceroPendiente');
-            sumaTotalPendienteContainer.classList.remove('ocultar')
-            ceroPendiente.classList.add('ocultar')
-            sumaTotalPendienteContainer.innerHTML = `
-            <p class="text_Resolution"  style="font-size: 10px;margin-left:28px;">${sumaTotalPendiente} Pendientes</p>`
+  // SUMAR DOCUMENTOS
 
-            console.log(sumaTotalPendiente)
- 
-        });
+  var sumaDocumentos = 0;
+  // Sum the count of each shard in the subcollection
+  firebase
+    .firestore()
+    .collection("tasks")
+    .where("files", "!=", [])
+    .get()
+    .then((snapshot) => {
+      let total_count = 1;
+      snapshot.forEach((doc) => {
+        total_count += doc.data().count;
+        console.log(total_count);
+        sumaDocumentos += total_count;
+        console.log(sumaDocumentos);
+        const sumaTotalDocumentos = sumaDocumentos + 1;
 
+        console.log(sumaTotalDocumentos);
+
+        const sumaTotalDocumentosContainer = viewHome.querySelector(
+          "#sumaTotalDocumentos"
+        );
+        const ceroDocumentos = viewHome.querySelector("#ceroDocumentos");
+        sumaTotalDocumentosContainer.classList.remove("ocultar");
+        ceroDocumentos.classList.add("ocultar");
+        sumaTotalDocumentosContainer.innerHTML = `
+      <p class="text_Resolution"  style="font-size: 10px;">${sumaTotalDocumentos}</p>
+      <p class="text_tipoResolution">Documentos</p>`;
+        console.log(sumaTotalDocumentos);
       });
-  
- 
-  
+    });
+  //SUMAR PENDIENTES
 
-    return viewHome;
-  };
+  var sumaPendiente = 0;
+  // Sum the count of each shard in the subcollection
+  firebase
+    .firestore()
+    .collection("tasks")
+    .where("status", "==", "Pendiente")
+    .get()
+    .then((snapshot) => {
+      let total_count = 1;
+      snapshot.forEach((doc) => {
+        total_count += doc.data().count;
+        console.log(total_count);
+        sumaPendiente += total_count;
+        console.log(sumaPendiente);
+        const sumaTotalPendiente = sumaPendiente;
+
+        console.log(sumaTotalPendiente);
+
+        const sumaTotalPendienteContainer = viewHome.querySelector(
+          "#sumaTotalPendiente"
+        );
+        const ceroPendiente = viewHome.querySelector("#ceroPendiente");
+        sumaTotalPendienteContainer.classList.remove("ocultar");
+        ceroPendiente.classList.add("ocultar");
+        sumaTotalPendienteContainer.innerHTML = `
+            <p class="text_Resolution"  style="font-size: 10px;margin-left:28px;">${sumaTotalPendiente} Pendientes</p>`;
+
+        console.log(sumaTotalPendiente);
+      });
+    });
+
+
+  //******* Generar reporte de Home-Caso *****/
+   const btnReport = viewHome.querySelector('#btnReport');
+
+    btnReport.addEventListener('click', () => {
+      // console.log('REPORTE');
+
+      const inspectionDate = localStorage.getItem("date");
+      let inspecDate = inspectionDate.split("-");
+      let reversedDate = inspecDate.reverse();
+      let dateInspection = reversedDate.join("-");
+
+      const lawyer = localStorage.getItem("funcionario_actuacion");
+      const multaPontencial = localStorage.getItem("multaPontencial");
+      const tipoRiesgo = localStorage.getItem("tipo_riesgo");
+      const orderInspeccion = localStorage.getItem("order");
+      const inspectorAuxiliar = localStorage.getItem("inspectorAuxiliar");
+      const etapa = localStorage.getItem("etapa");
+      let tipoEtapa = etapa.toUpperCase();
+
+      let show1 = '';
+      let show2 = '';
+      let show3 = '';
+      let show4 = '';
+      let show5 = '';
+      let show6 = '';
+      let show7 = "";
+      let show8 = "";
+
+      if (localStorage.getItem("materia1") == undefined) {
+        // console.log("no existe materia1");
+        show1 = "hide";
+      } else {
+        // console.log("existe materia1");
+        show1 = "displayF";
+      }
+
+      if (localStorage.getItem("materia2") == undefined) {
+        // console.log("no existe materia2");
+        show2 = "hide";
+      } else {
+        // console.log("existe materia2");
+        show2 = "displayF";
+      }
+
+      if (localStorage.getItem("materia3") == undefined) {
+        // console.log("no existe materia3");
+        show3 = "hide";
+      } else {
+        // console.log("existe materia3");
+        show3 = "displayF";
+      }
+
+      if (localStorage.getItem("materia4") == undefined) {
+        // console.log("no existe materia4");
+        show4 = "hide";
+      } else {
+        // console.log("existe materia4");
+        show4 = "displayF";
+      }
+
+      if (localStorage.getItem("materia5") == undefined) {
+        // console.log("no existe materia5");
+        show5 = "hide";
+      } else {
+        // console.log("existe materia5");
+        show5 = "displayF";
+      }
+
+      if (localStorage.getItem("materia6") == undefined) {
+        // console.log("no existe materia6");
+        show6 = "hide";
+      } else {
+        // console.log("existe materia6");
+        show6 = "displayF";
+      }
+
+      if (localStorage.getItem("materia7") == undefined) {
+        // console.log("no existe materia7");
+        show7 = "hide";
+      } else {
+        // console.log("existe materia7");
+        show7 = "displayF";
+      }
+
+      if (localStorage.getItem("materia8") == undefined) {
+        // console.log("no existe materia8");
+        show8 = "hide";
+      } else {
+        // console.log("existe materia8");
+        show8 = "displayF";
+      }
+
+
+      let imgNivelEtapa = "";
+      let marginTFooter = "";
+      if (tipoRiesgo === "Nivel Alto") {
+        imgNivelEtapa = "./img/svg/barra-alto.svg";
+        marginTFooter = "180px";
+      } 
+
+      if (tipoRiesgo === "Nivel Moderado") {
+        imgNivelEtapa = "./img/svg/barra-moderado.svg";
+        marginTFooter = "225px"
+      } 
+      
+      if (tipoRiesgo === "Nivel Leve") {
+        imgNivelEtapa = "./img/svg/barra-leve.svg";
+        marginTFooter = "230px";
+      } 
+
+
+      html2pdf()
+        .from(
+          `
+      
+    <div id="container-report" style="color:#0F3041;">
+
+      <div class="d-flex flex-column" style="margin-top:24px;">
+        <img src="./img/svg/logo.svg" style="height:35px;align-self: flex-end; margin-right:30px; margin-bottom: -60px;" alt="logo"> 
+        <img src="./img/banner-reporte.png" style="height: 80px; width:100%; opacity: 0.5;" alt="banner"/>
+      </div>
+      <div style="padding:25px 50px 0;">
+        <h2>CASO ESTIBADORES</h2>
+        <p style="margin:0;">Fecha de creación: ${dateInspection}</p>
+        <p>Abogado a cargo: <strong>${lawyer}</strong></p>
+
+        <div class="d-flex flex-column" style="margin-top:40px;">
+
+          <div class="d-flex">
+            <div id="div-left" style="width:50%;">
+              <div class="div-left-descripcion">
+                <strong>Descripción</strong>
+                <p style="width:242px; text-align:justify;">
+                  Loream ipsum dolor sit amet, consectetur adipiscing elit.
+                  Gravida urna et mi accumsan scelerisque. Amet magna sit mattis
+                  lobortis leo.
+                </p>
+              </div>
+              <div class="div-left-multa" style="margin-top:40px;">
+                <img src="./img/svg/flecha-up.svg" style="margin-right:10px;" alt="icono multa" />
+                <strong>Multa potencial</strong>
+                <p style="padding-left: 45px;">S/ ${multaPontencial}</p>
+              </div>
+              <div style="margin-top:40px;">
+                <img src=${imgNivelEtapa} style="margin-right:10px;" alt="icono barras" />
+                <strong>Riesgo</strong>
+                <p style="padding-left: 45px;">${tipoRiesgo}</p>
+              </div>
+            </div>
+
+            <div id="div-right">
+              <div id="container-materias" class="div-right-materias">
+                
+                <img src="./img/svg/elecciones.svg" style="margin-right: 8px;" alt="icono materias" />
+                <strong>Materias</strong>
+                  <div id="divMaterias" style="padding-left: 45px;">
+                  <p style="margin:0;" id="materia_1" class=${show1}>• Relaciones laborales</p>
+                  <p style="margin:0;" id="materia_2" class=${show2}>• Seguridad y salud en el trabajo</p>
+                  <p style="margin:0;" id="materia_3" class=${show3}>• Empleo y colocación</p>
+                  <p style="margin:0;" id="materia_4" class=${show4}>• Intermediación laboral</p>
+                  <p style="margin:0;" id="materia_5" class=${show5}>• Promoción y formación</p>
+                  <p style="margin:0;" id="materia_6" class=${show6}>• Extranjeros</p>
+                  <p style="margin:0;" id="materia_7" class=${show7}>• Seguridad social</p>
+                  <p style="margin:0;" id="materia_8" class=${show8}>• Labor inspectiva</p>
+                </div>
+              </div>
+              <div class="div-right-oInscripcion" style="margin-top:40px;">
+                <img src="./img/svg/orden.svg" style="margin-right: 8px;" alt="icono orden" />
+                <strong>Orden de Inspección</strong>
+                <p style="padding-left: 45px;">${orderInspeccion}</p>
+              </div>
+              <div class="div-right-funcionario" style="margin-top:40px;">
+                <img src="./img/svg/avatar-funci.svg" style="margin-right: 8px;" alt="icono funcionario" />
+                <strong>Funcionario actual</strong>
+                <p style="padding-left: 45px;">${inspectorAuxiliar}</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:50px;">
+            <strong style="">Actuaciones</strong>
+            <p style="font-size:12px; color:#BDBDBD;">
+              Última actualización 19/05/2021
+            </p>
+
+            <strong style="color:#FF3355;">ETAPA: ${tipoEtapa}</strong>
+            <hr style="margin:0;" />
+
+            <table class="table-caso" style="margin-top:15px;">
+              <thead id="table-head">
+                <tr style="font-size:12px; color:#BDBDBD;">
+                  <th scope="col" style="width:400px">TIPO</th>
+                  <th scope="col">INICIO</th>
+                </tr>
+              </thead>
+              <tbody style="padding-top:10px; color:#7D7577;">
+                <tr>
+                  <td>Requerimiento de comparecencia</td>
+                  <td>12/04/2021</td>
+                </tr>
+                <tr>
+                  <td>Notificación</td>
+                  <td>18/01/2021</td>
+                </tr>
+                <tr>
+                  <td>Presentan demanda</td>
+                  <td>26/12/2020</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+
+   
+     <div class="footer d-flex" style="margin-top:${marginTFooter}; padding: 10px 20px 5px;">
+        <p>
+          Copyright © 2021 <strong>sami.</strong>Todos los derechos reservados.
+          <span>Términos del Servicio y Políticas de Privacidad</span>
+        </p>
+        <img src="./img/svg/group.svg" alt="logo" />
+      </div>
+
+    </div>
+  `
+        )
+        .save();
+    })
+
+  return viewHome;
+};
