@@ -1,0 +1,149 @@
+.wrapperCases {
+  border: 1px solid pink;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 64px 1fr 81px;
+  background: var(--background-primary);
+}
+
+/********* HEADER (home-CASES) ********/
+
+.headerCases {
+  border: 1px solid yellow;
+  grid-column: 1/2;
+  grid-row: 1/2;
+}
+
+/******** MAIN (home-CASES) *********/
+.containerHomeCases {
+  border: 1px solid red;
+  grid-column: 1/2;
+  grid-row: 2/3;
+  display: flex;
+  margin: 66px 61px 39px 77px;
+}
+
+/******* SIDEBAR *******/
+.sidebarCases {
+  border: 1px solid gold;
+  height: 816px;
+  width: 236px;
+  padding: 18px 11px 22px 18px;
+  margin-right: 39px;
+  background: var(--white);
+}
+
+.sidebarCases .sidebar-company p {
+  margin: 20px 0 14px 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--txtBlueLight);
+}
+
+/* .sidebarCases .sidebar-company img {
+
+} */
+
+.sidebarCases .company-pendingTasks {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-sidebar);
+}
+
+.sidebarCases .pendingTasks-header p {
+  font-size: 14px;
+  font-weight: bold;
+  color : var(--txtBlueLight);
+}
+
+.sidebarCases .pendingTasks-header button {
+  height: 15px;
+  padding: 3px;
+  font-size: 11px;
+  color: var(--border-blue);
+}
+
+.sidebarCases .caseProgress {
+  border-top: 1px solid var(--line-sidebar);
+  padding-top: 20px;
+}
+
+.sidebarCases .caseProgress-header p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--txtBlueLight);
+}
+
+.sidebarCases .caseProgress-content {
+  margin-top: 21px;
+}
+
+.sidebarCases .caseProgress-content p {
+  margin-left: 28px;
+}
+
+.sidebarCases .caseTeam {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line-sidebar);
+}
+
+.sidebarCases .caseTeam p {
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--txtBlueLight);
+}
+
+.caseTeam .caseTeam-names {
+  margin-top: 14px;
+}
+
+.caseTeam .miniCardTeam {
+  margin-bottom: 23px;
+}
+
+.caseTeam .miniCardTeam p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--txtForm);
+}
+
+.caseTeam .miniCardTeam img {
+  margin-right: 21px;
+}
+
+
+/****** Cards de Casos *****/
+.mainCases {
+  border: 1px solid purple;
+  height: 816px;
+  width: 100%;
+  background: var(--white);
+}
+
+/******** FOOTER (home-CASES) **********/
+.footerCases {
+  grid-column: 1/2;
+  grid-row: 3/4;
+  bottom: 0;
+  padding: 0 152px 0px;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line-header);
+}
+
+.footerCases p {
+  font-size: 12px;
+  color : var(--grayLight);
+}
+
+.footerCases span {
+  color: var(--primary-red);
+}
+
+.footerCases img {
+  height: 27px;
+  width: 18px;
+}

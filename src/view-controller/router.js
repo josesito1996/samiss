@@ -32,6 +32,9 @@ export const changeTmp = (hash) => {
     case "#/viewReport":
       container.appendChild(components.viewReport());
       break;
+    case "#/homeCases":
+      container.appendChild(components.homeCases());
+      break;
     default:
       return container.appendChild(components.Different());
   }

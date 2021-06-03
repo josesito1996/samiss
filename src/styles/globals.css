@@ -20,6 +20,7 @@
   --grayLight : #838795;
   --white : #ffffff;
   --txtRed : #FF4766;
+  --txtBlueLight :#969CBA;
     /* --txtGray :#696465; */
   --txtGray :#7D7577;
   --txtForm : #0E3141;
@@ -32,6 +33,7 @@
   --margin-card-materia : 0 0 8px;
   --padding-card-materia : 10px;
   --border-radius-card : 10px;
+
 }
 
 * {
