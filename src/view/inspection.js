@@ -282,7 +282,8 @@ export default () => {
                 flex: none;
                 order: 4;
                 flex-grow: 0;
-                margin: 30px 630px;" class="pruebahome btnenviar_desacti">Continuar</button>
+                margin-left: 700px;
+                margin-top: 30px;" class="pruebahome btnenviar_desacti">Continuar</button>
             </form>
         </div>
     </div>
@@ -309,7 +310,7 @@ export default () => {
                             <div class="mb-3 row" style="margin-left:30px;margin-top:50px;">
                                 <label for="inputPassword" class="col-12 col-lg-5  col-form-label" style=" margin-left:0px; font-size: 15px;">3. Inspector de
                                     trabajo</label>
-                                <input type="text" class="form-control"  placeholder="Alberto Morán"
+                                <input id="caseJobInspector" type="text" class="form-control"  placeholder="Alberto Morán"
                                     style="width:355.19px; height:39px;box-shadow: 0 0 0px 25px white inset; border-radius:10px;">
                                 <div class="d-flex column justify-content-end" >
                                     <!-- <i class="fas fa-plus link-success "></i> -->
@@ -428,11 +429,13 @@ export default () => {
                                    <input type="text" class="form-control" required id="mensaje" placeholder="Caso Estibadores"
                                        style="width:285.96px; height:39px; box-shadow: 0 0 0px 25px white inset; border-radius:10px;">
                                </div>
-                               <div class="row" id="btn_crearCaso">
+                               <div class="row d-flex justify-content-center" id="btn_crearCaso">
                                <input type="button" disabled id="enviar" value="Crear caso" class="btnenviar_desacti">
-                            </div>
-         
-                         
+                               </div>
+                               
+                               <div class="d-flex justify-content-center" style="margin-top: 50px;">
+                                <button type="button" id="btnCreateCase" class="btn btn-primary" style="width: 135px; border-radius:10px; padding:8px;">+ Crear caso</button>
+                               </div>
             
                         </form>
                     </div>
@@ -474,10 +477,12 @@ export default () => {
        //   );
         
          function handlerDate() {
+          //  console.log('date');
            localStorage.setItem("date", inspectionDate.value);
          }
         
          function handlerOrder() {
+          //  console.log('order');
            localStorage.setItem("order", inspectionOrder.value);
          }
         
@@ -508,8 +513,10 @@ export default () => {
          function handlerCheck1() {
            let checked = checkUno.checked;
            if (checked) {
+            //  console.log("materia1.value");
              localStorage.setItem("materia1", checkUno.value);
            } else {
+            //  console.log("materia1");
              localStorage.removeItem("materia1");
            }
          }
@@ -517,8 +524,10 @@ export default () => {
          function handlerCheck2() {
           let checked = checkDos.checked;
           if (checked) {
+            // console.log("materia2.value");
             localStorage.setItem("materia2", checkDos.value);
           } else {
+            // console.log("materia2");
             localStorage.removeItem("materia2");
           }
         }
@@ -526,8 +535,10 @@ export default () => {
         function handlerCheck3() {
           let checked = checkTres.checked;
           if (checked) {
+            // console.log("materia3.value");
             localStorage.setItem("materia3", checkTres.value);
           } else {
+            // console.log("materia3");
             localStorage.removeItem("materia3");
           }
         }
@@ -535,8 +546,10 @@ export default () => {
         function handlerCheck4() {
           let checked = checkCuatro.checked;
           if (checked) {
+            // console.log("materia4.value");
             localStorage.setItem("materia4", checkCuatro.value);
           } else {
+            // console.log("materia4");
             localStorage.removeItem("materia4");
           }
         }
@@ -544,8 +557,10 @@ export default () => {
         function handlerCheck5() {
           let checked = checkCinco.checked;
           if (checked) {
+            // console.log("materia5.value");
             localStorage.setItem("materia5", checkCinco.value);
           } else {
+            // console.log("materia5");
             localStorage.removeItem("materia5");
           }
         }
@@ -553,8 +568,10 @@ export default () => {
         function handlerCheck6() {
           let checked = checkSeis.checked;
           if (checked) {
+            // console.log("materia6.value");
             localStorage.setItem("materia6", checkSeis.value);
           } else {
+            // console.log("materia6");
             localStorage.removeItem("materia6");
           }
         }
@@ -562,8 +579,10 @@ export default () => {
         function handlerCheck7() {
           let checked = checkSiete.checked;
           if (checked) {
+            // console.log("materia7.value");
             localStorage.setItem("materia7", checkSiete.value);
           } else {
+            // console.log("materia7");
             localStorage.removeItem("materia7");
           }
         }
@@ -571,8 +590,10 @@ export default () => {
         function handlerCheck8() {
           let checked = checkOcho.checked;
           if (checked) {
+            // console.log("materia8.value");
             localStorage.setItem("materia8", checkOcho.value);
           } else {
+            // console.log("materia8");
             localStorage.removeItem("materia8");
           }
         }
@@ -788,6 +809,73 @@ function drop(event) {
         localStorage.setItem("inspectorAuxiliar", auxiliar.value);
         window.location.hash = '#/home' 
         });
+
+
+
+    //******** Crear Caso - (envío a Firebase) ******/
+    const btnCreateCase = viewInspection.querySelector("#btnCreateCase");
+
+    btnCreateCase.addEventListener('click', () => {
+      const fechaInspection = viewInspection.querySelector("#fecha_inspection").value;
+        let resFecha = fechaInspection.split("-");
+        let reversedFecha = resFecha.reverse();
+        let caseInspectionDate = reversedFecha.join("-");
+
+      const caseInspectionOrder = viewInspection.querySelector("#orden_inspection").value;
+      const caseJobInspector = viewInspection.querySelector("#caseJobInspector").value;
+      const caseAuxiliaryInspector = viewInspection.querySelector("#auxiliar").value;
+      const caseDenomination = viewInspection.querySelector("#mensaje").value;
+      const caseMaterias = [];
+
+      if (checkUno.checked) {
+        caseMaterias.push("Relaciones Laborales");
+      }
+
+      if (checkDos.checked) {
+        caseMaterias.push("Seguridad y salud en el trabajo");
+      }
+
+      if (checkTres.checked) {
+        caseMaterias.push("Empleo y colocación");
+      }
+
+      if (checkCuatro.checked) {
+        caseMaterias.push("Intermediación laboral");
+      }
+
+      if (checkCinco.checked) {
+        caseMaterias.push("Promoción y formación");
+      }
+
+      if (checkSeis.checked) {
+        caseMaterias.push("Extranjeros");
+      }
+
+      if (checkSiete.checked) {
+        caseMaterias.push("Seguridad social");
+      }
+
+      if (checkOcho.checked) {
+        caseMaterias.push("Labor inspectiva");
+      }
+
+
+      const newCase = {
+        inspectionDate: caseInspectionDate,
+        inspectionOrder: caseInspectionOrder,
+        jobInspector: caseJobInspector,
+        auxiliaryInspector: caseAuxiliaryInspector,
+        materias: caseMaterias,
+        denomination: caseDenomination,
+      };
+
+      firebase.firestore().collection("cases").add(newCase);
+      window.location.hash = "#/home"; 
+    })
+
+
+
+
       return viewInspection
   };
  
