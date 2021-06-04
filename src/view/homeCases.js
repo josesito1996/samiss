@@ -24,10 +24,48 @@ export default () => {
           <div class="company-pendingTasks">
             <div class="pendingTasks-header d-flex justify-content-between">
               <p>Tareas pendientes</p>
-              <button>VerTodas</button>
+              <button>Ver Todas</button>
             </div>
-            <div class="pendingTasks-content">
-              <p>LISTA</p>
+            <div class="pendingTasks-content" >
+
+              <div class="pendingTasks-content-card d-flex">
+                <img src="./img/svg/circulo-rojo.svg" alt="circulo rojo" />
+                <div class="card-fvenci">
+                  <p>02 Jun</p>
+                  <span>Vencimiento</span>
+                </div>
+                <div class="card-taskName">
+                  <p>Tarea 1:</p>
+                  <span>Gravida et...</span>
+                </div>
+              </div>
+
+              <div class="pendingTasks-content-card d-flex">
+                <img src="./img/svg/circulo-rojo.svg" alt="circulo rojo" />
+                <div class="card-fvenci">
+                  <p>09 Jun</p>
+                  <span>Vencimiento</span>
+                </div>
+                <div class="card-taskName">
+                  <p>Tarea 2:</p>
+                  <span>Gravida et...</span>
+                </div>
+              </div>
+
+
+              <div class="pendingTasks-content-card d-flex">
+                <img src="./img/svg/circulo-rojo.svg" alt="circulo rojo" />
+                <div class="card-fvenci">
+                  <p>12 Jun</p>
+                  <span>Vencimiento</span>
+                </div>
+                <div class="card-taskName">
+                  <p>Tarea 3:</p>
+                  <span>Gravida et...</span>
+                </div>
+              </div>
+
+
             </div>
           </div>
 
@@ -37,8 +75,12 @@ export default () => {
               <img src="./img/svg/btn-right.svg" alt="botón siguiente" />
             </div>
             <div class="caseProgress-content d-flex">
-              <img src="./img/svg/circle-progress.svg" alt="" />
-              <p>LISTA</p>
+              <img src="./img/svg/circle-progress.svg" alt="circulo progreso" />
+              <div class="content-items">
+                <img src="./img/svg/circulo-azul.svg" alt="En proceso" style="margin-top:5px;" />
+                <img src="./img/svg/circulo-verde.svg" alt="En proceso" style="margin-top:10px;" />
+                <img src="./img/svg/circulo-rojoItem.svg" alt="En proceso" style="margin-top:10px;"/>
+              </div>
             </div>
           </div>
 
@@ -51,7 +93,7 @@ export default () => {
               </div>
               <div class="miniCardTeam d-flex align-items-center">
                 <img src="./img/svg/avatar2.svg" alt="foto perfil" />
-                <p>MArio Gonzales</p>
+                <p>Mario Gonzales</p>
               </div>
               <div class="miniCardTeam d-flex align-items-center">
                 <img src="./img/svg/avatar3.svg" alt="foto perfil" />

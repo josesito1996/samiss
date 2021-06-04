@@ -9,14 +9,14 @@
 /********* HEADER (home-CASES) ********/
 
 .headerCases {
-  border: 1px solid yellow;
+  border: 1px solid pink;
   grid-column: 1/2;
   grid-row: 1/2;
 }
 
 /******** MAIN (home-CASES) *********/
 .containerHomeCases {
-  border: 1px solid red;
+  /* border: 1px solid red; */
   grid-column: 1/2;
   grid-row: 2/3;
   display: flex;
@@ -25,12 +25,13 @@
 
 /******* SIDEBAR *******/
 .sidebarCases {
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
   height: 816px;
   width: 236px;
   padding: 18px 11px 22px 18px;
   margin-right: 39px;
   background: var(--white);
+  font-family: Raleway;
 }
 
 .sidebarCases .sidebar-company p {
@@ -63,9 +64,56 @@
   color: var(--border-blue);
 }
 
+.sidebarCases .pendingTasks-content-card {
+  margin-bottom: 18px;
+}
+
+.pendingTasks-content-card .card-fvenci {
+  /* border: 1px solid red; */
+  height: 30px;
+  width: 70px;
+  margin-left: 10px;
+}
+
+.pendingTasks-content-card .card-fvenci p{
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-blue);
+}
+
+.pendingTasks-content-card .card-fvenci span{
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--txtBlueLight);
+}
+
+.pendingTasks-content-card  .card-taskName {
+  /* border: 1px solid yellow; */
+  height: 30px;
+  width: 95px;
+}
+
+.pendingTasks-content-card  .card-taskName p {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 15px;
+  color: var(--primary-blue);
+}
+
+.pendingTasks-content-card  .card-taskName span {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 15px;
+}
+
 .sidebarCases .caseProgress {
-  border-top: 1px solid var(--line-sidebar);
+  /* margin-top: 20px; */
+  margin-top: 2px;
   padding-top: 20px;
+  border-top: 1px solid var(--line-sidebar);
 }
 
 .sidebarCases .caseProgress-header p {
@@ -81,6 +129,13 @@
 
 .sidebarCases .caseProgress-content p {
   margin-left: 28px;
+}
+
+.caseProgress-content .content-items {
+  padding-top: 10px;
+  margin-left: 28px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebarCases .caseTeam {
@@ -117,7 +172,7 @@
 
 /****** Cards de Casos *****/
 .mainCases {
-  border: 1px solid purple;
+  border: 1px solid pink;
   height: 816px;
   width: 100%;
   background: var(--white);

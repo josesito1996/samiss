@@ -825,40 +825,70 @@ function drop(event) {
       const caseJobInspector = viewInspection.querySelector("#caseJobInspector").value;
       const caseAuxiliaryInspector = viewInspection.querySelector("#auxiliar").value;
       const caseDenomination = viewInspection.querySelector("#mensaje").value;
+      // const containerCheck = document.getElementById("form_handbook").checkbox;
       const caseMaterias = [];
+      let cont = 0;
+      let tipoNivel = "";
+      // console.log(containerCheck);
+
+      // for (let x = 0; x < containerCheck.length; x++) {
+      //   if (containerCheck[x].checked) {
+      //     cont = cont + 1;
+      //   }
+      // }
+      // console.log('El numero de checkbox pulsados es' + cont);
+
 
       if (checkUno.checked) {
         caseMaterias.push("Relaciones Laborales");
+        cont = cont + 1;
       }
 
       if (checkDos.checked) {
         caseMaterias.push("Seguridad y salud en el trabajo");
+        cont = cont + 1;
       }
 
       if (checkTres.checked) {
         caseMaterias.push("Empleo y colocación");
+        cont = cont + 1;
       }
 
       if (checkCuatro.checked) {
         caseMaterias.push("Intermediación laboral");
+        cont = cont + 1;
       }
 
       if (checkCinco.checked) {
         caseMaterias.push("Promoción y formación");
+        cont = cont + 1;
       }
 
       if (checkSeis.checked) {
         caseMaterias.push("Extranjeros");
+        cont = cont + 1;
       }
 
       if (checkSiete.checked) {
         caseMaterias.push("Seguridad social");
+        cont = cont + 1;
       }
 
       if (checkOcho.checked) {
         caseMaterias.push("Labor inspectiva");
+        cont = cont + 1;
       }
 
+      // console.log('Checkbox marcados: ', cont);
+      if (cont >= 4 ){
+        tipoNivel = "Nivel Alto";
+      } else if (cont >= 2 ) {
+        tipoNivel = "Nivel Moderado";
+      } else {
+        tipoNivel = "Nivel Leve";
+      }
+      console.log('tipo nivel; ', tipoNivel);
+      
 
       const newCase = {
         inspectionDate: caseInspectionDate,
@@ -867,6 +897,7 @@ function drop(event) {
         auxiliaryInspector: caseAuxiliaryInspector,
         materias: caseMaterias,
         denomination: caseDenomination,
+        tipoNivel: tipoNivel,
       };
 
       firebase.firestore().collection("cases").add(newCase);
