@@ -164,6 +164,13 @@ export default () => {
     </div>
   `;
 
+  // var starCountRef = firebase.database().ref('cases/' + '/crearActuacion');
+  // starCountRef.on('value', (snapshot) => {
+  //   const data = snapshot.val();
+  //    console.log(data)
+  //   // updateStarCount(postElement, data);
+  // });
+
 
 const show_card_homeCase = viewHomeCases.querySelector("#show_allCard_homeCase")
     firebase
@@ -230,7 +237,7 @@ const show_card_homeCase = viewHomeCases.querySelector("#show_allCard_homeCase")
             </div>
 
             <div class="d-flex flex-row ">
-                <div id="stage_homeCase"><span>Sancionadora</span>
+                <div id="stage_homeCase"><span>${doc.data().Etapa}</span>
                 </div>
                 <img id="bntDetailCase" src="./img/svg/arrow_card_homeCase.svg"/>
             </div>
@@ -245,8 +252,8 @@ const show_card_homeCase = viewHomeCases.querySelector("#show_allCard_homeCase")
 
           <div class="d-flex flex-row" id="row3_card_homeCase" >
               <div class="d-flex flex-column" id="kind_stage_card_homeCase">
-                <p id ="style_card_dateStage_homeCase">13/05/2021</p>
-                  <p id ="style_title_card_homeCase">Requerimiento de compadecencia</p>
+                <p id ="style_card_dateStage_homeCase">${doc.data().Fecha}</p>
+                  <p id ="style_title_card_homeCase">${doc.data().Tipo}</p>
                   <p id ="style_txt_stage_card_homeCase">Última actuación</p>
               </div>
 

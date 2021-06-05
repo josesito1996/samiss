@@ -475,6 +475,32 @@ btn_crearActuacion.addEventListener("click", () => {
           firebase.firestore().collection("addActuacion").add(newActuacion);
           console.log(newActuacion);
 
+
+//   // A post entry.
+//   var postData = {
+//     Fecha: date_actuacion,
+//     Tipo: selectedOptionTipo.value,
+//     Etapa: selectedOptionEtapa.value,
+//   };
+
+
+//   // Get a key for a new Post.
+//   var newPostKey = firebase.database().ref().child('cardHomeCase').push().key;
+
+//   // Write the new post's data simultaneously in the posts list and the user's post list.
+//   var updates = {};
+//   updates['/cardHomeCase/' + newPostKey] = postData;
+
+
+
+//  firebase.database().ref().update(updates);
+
+        
+    
+
+         
+
+    
         // const db = firebase.firestore()
         // db.collection("addActuacion").add({
         //     Fecha: date_actuacion,

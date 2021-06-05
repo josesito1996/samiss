@@ -26,7 +26,7 @@ export default () => {
     // });
    
     const viewInspection = document.createElement("div");
-    viewInspection.innerHTML = `
+    viewInspection.innerHTML =`
         <div class="header" style="height:64px; background:#F9FBFC;">
           <div class="header-left d-flex">
           <a href="#/home">
@@ -904,9 +904,24 @@ function drop(event) {
       };
 
       firebase.firestore().collection("cases").add(newCase);
+
+      // const cardHomeCase = {
+      //   inspectionDate: caseInspectionDate,
+      //   inspectionOrder: caseInspectionOrder,
+      //   denomination: caseDenomination,
+      //   tipoNivel: tipoNivel,
+      //   Tipo:"",
+      //   Fecha:"",
+      //   Etapa:"",
+      // };
+
+      // firebase.firestore().collection("cardHomeCase").add(cardHomeCase);
+
       window.location.hash = "#/home"; 
     })
 
+
+    
 
 
 

@@ -1428,27 +1428,6 @@ export default () => {
     window.location.hash = "#/actuacion";
   });
 
-  //mostar descripcion actuacion
-
-  // const descripcion_actuacion = localStorage.getItem("#descripcion_actuacion");
-  const input_setDescripcion_actuacion = viewHome.querySelector(
-    "#input_setDescripcion_actuacion"
-  );
-  const descripcion_actuacion_edit = viewHome.querySelector(
-    "#descripcion_actuacion_edit"
-  );
-  const descripcion_actuacion_get = viewHome.querySelector(
-    "#descripcion_actuacion_get"
-  );
-
-  if (descripcion_actuacion == null) {
-    console.log(descripcion_actuacion);
-    descripcion_actuacion_get.classList.add("ocultar");
-    input_setDescripcion_actuacion.classList.add("ocultar");
-    descripcion_actuacion_edit.classList.remove("ocultar");
-  } else {
-  }
-
  
   // menú etapas
 
@@ -2420,6 +2399,27 @@ firebase.firestore().collection('tasks').where("files","!=",[]).get().then((snap
         `;
 
         
+  //mostar descripcion actuacion
+
+  // const descripcion_actuacion = localStorage.getItem("#descripcion_actuacion");
+  const input_setDescripcion_actuacion = viewHome.querySelector(
+    "#input_setDescripcion_actuacion"
+  );
+  const descripcion_actuacion_edit = viewHome.querySelector(
+    "#descripcion_actuacion_edit"
+  );
+  const descripcion_actuacion_get = viewHome.querySelector(
+    "#descripcion_actuacion_get"
+  );
+
+  if (descripcion_actuacion == null) {
+    console.log(descripcion_actuacion);
+    descripcion_actuacion_get.classList.add("ocultar");
+    input_setDescripcion_actuacion.classList.add("ocultar");
+    descripcion_actuacion_edit.classList.remove("ocultar");
+  } else {
+  }
+
       const  container = document.querySelector('.circle-lineTime')
       container.style.border = "5px solid #FFB000";
         //Mostrar y ocultar documentos de Actuaciones
