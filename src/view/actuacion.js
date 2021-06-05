@@ -469,6 +469,7 @@ btn_crearActuacion.addEventListener("click", () => {
             Month:month,
             Year:year,
             File:"",
+            // idCase: "",
           };
       
           firebase.firestore().collection("addActuacion").add(newActuacion);

@@ -311,7 +311,8 @@ export default () => {
                                 <label for="inputPassword" class="col-12 col-lg-5  col-form-label" style=" margin-left:0px; font-size: 15px;">3. Inspector de
                                     trabajo</label>
 
-                                <input id="caseJobInspector" type="text" class="form-control"  placeholder="Alberto Morán"
+                                <!--id: "caseJobInspector"-->
+                                <input id="inspectorFuncionario" type="text" class="form-control"  placeholder="Alberto Morán"
 
                                     style="width:355.19px; height:39px;box-shadow: 0 0 0px 25px white inset; border-radius:10px;">
                                 <div class="d-flex column justify-content-end" >
@@ -436,7 +437,7 @@ export default () => {
                                </div>
                                
                                <div class="d-flex justify-content-center" style="margin-top: 50px;">
-                                <button type="button" id="btnCreateCase" class="btn btn-primary" style="width: 135px; border-radius:10px; padding:8px;">+ Crear caso</button>
+                                <button type="button" id="btnCreateCase" class="btn btn-primary hide" style="width: 135px; border-radius:10px; padding:8px;">+ Crear caso</button>
                                </div>
             
                         </form>

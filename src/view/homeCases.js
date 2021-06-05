@@ -56,41 +56,8 @@ export default () => {
             </div>
             <div class="pendingTasks-content" >
 
-              <div class="pendingTasks-content-card d-flex">
-                <img src="./img/svg/circulo-rojo.svg" alt="circulo rojo" />
-                <div class="card-fvenci">
-                  <p>02 Jun</p>
-                  <span>Vencimiento</span>
-                </div>
-                <div class="card-taskName">
-                  <p>Tarea 1:</p>
-                  <span>Gravida et...</span>
-                </div>
-              </div>
+              <div id="container_pedingTasks" class="pendingTasks-content-card d-flex">
 
-              <div class="pendingTasks-content-card d-flex">
-                <img src="./img/svg/circulo-rojo.svg" alt="circulo rojo" />
-                <div class="card-fvenci">
-                  <p>09 Jun</p>
-                  <span>Vencimiento</span>
-                </div>
-                <div class="card-taskName">
-                  <p>Tarea 2:</p>
-                  <span>Gravida et...</span>
-                </div>
-              </div>
-
-
-              <div class="pendingTasks-content-card d-flex">
-                <img src="./img/svg/circulo-rojo.svg" alt="circulo rojo" />
-                <div class="card-fvenci">
-                  <p>12 Jun</p>
-                  <span>Vencimiento</span>
-                </div>
-                <div class="card-taskName">
-                  <p>Tarea 3:</p>
-                  <span>Gravida et...</span>
-                </div>
               </div>
 
 
@@ -265,7 +232,7 @@ const show_card_homeCase = viewHomeCases.querySelector("#show_allCard_homeCase")
             <div class="d-flex flex-row ">
                 <div id="stage_homeCase"><span>Sancionadora</span>
                 </div>
-                <img  src="./img/svg/arrow_card_homeCase.svg"/>
+                <img id="bntDetailCase" src="./img/svg/arrow_card_homeCase.svg"/>
             </div>
           </div>
 
@@ -311,6 +278,53 @@ const show_card_homeCase = viewHomeCases.querySelector("#show_allCard_homeCase")
           </div>
 
           </div>`;
+
+/****** Traer tareas pendientes *******/
+const containerPendingTasks = viewHomeCases.querySelector("#container_pedingTasks") ;
+
+  firebase
+    .firestore()
+    .collection("tasks")
+    .where("status", "==", "Pendiente")
+    .onSnapshot((querySnapshot) => {
+      containerPendingTasks.innerHTML = "";
+      let count = 0
+      querySnapshot.forEach((doc) => {
+        count = count + 1
+        containerPendingTasks.innerHTML += `
+      <div class="d-flex">
+        <img src="./img/svg/circulo-rojo.svg" alt="circulo rojo" />
+        <div class="card-fvenci">
+          <p>02 Jun</p>
+          <span>Vencimiento</span>
+        </div>
+        <div class="card-taskName">
+          <p>Tarea ${count}:</p>
+          <p class="taskName">${doc.data().taskName}</p>
+        </div>
+      </div>
+      `;
+      });
+    });
+
+
+
+
+
+
+
+/******* trae id de Caso ******/
+const bntDetailCase = viewHomeCases.querySelector("#bntDetailCase");
+
+  bntDetailCase.addEventListener("click", () => {
+
+    // console.log("traer id Case", doc.id);
+
+    global_variable = doc.id;
+    console.log('ENVIO ID->', global_variable);
+  });
+
+
         })
     })   
 
@@ -326,5 +340,8 @@ const show_card_homeCase = viewHomeCases.querySelector("#show_allCard_homeCase")
 
 //     const container_information_homeCase = homeCase.querySelector("#container_information_homeCase")
 // // }
+
+
+
   return viewHomeCases
 }
